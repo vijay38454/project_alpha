@@ -1,18 +1,362 @@
 <!doctype html>
 <html lang="en">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SleekShift — Coming Soon</title>
-<style>
-  body{margin:0;display:grid;place-items:center;min-height:100svh;font:16px system-ui,Segoe UI,Roboto,Helvetica,Arial}
-  .card{padding:3rem 2rem;text-align:center;border:1px solid #e5e7eb;border-radius:16px;max-width:560px;box-shadow:0 10px 30px rgba(0,0,0,.06)}
-  h1{font-size:2rem;margin:0 0 .5rem}
-  p{color:#555;margin:.25rem 0}
-  .brand{font-weight:600;letter-spacing:.2px}
-</style>
-<div class="card">
-  <h1 class="brand">SleekShift</h1>
-  <p>We’re building something useful. Launching soon.</p>
-  <p>Contact: <a href="mailto:contact@sleekshift.co.uk">contact@sleekshift.co.uk</a></p>
-</div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SleekShift — Launch your D2C brand</title>
+  <meta name="description" content="Branding, ecommerce stores and packaging engineered for founders who want speed and production-ready deliverables." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; /* deep slate */
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.04);
+      --card:#0b1220;
+      --accent1:#7c3aed; /* purple */
+      --accent2:#5eead4; /* mint */
+      --max-w:1100px;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:linear-gradient(180deg,#071025 0%, #071528 45%, #041027 100%);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    .container{width:90%;max-width:var(--max-w);margin:0 auto}
+
+    /* NAV */
+    header{backdrop-filter: blur(6px);position:sticky;top:12px;z-index:40}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:12px;background:linear-gradient(90deg, rgba(10,13,20,0.6), rgba(8,12,18,0.35));box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),#5b21b6);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    nav ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
+    .nav a.link{color:var(--muted);font-weight:500}
+    .cta{background:linear-gradient(90deg,var(--accent2),var(--accent1));padding:10px 16px;border-radius:10px;color:#021018;font-weight:700}
+    .ghost{border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--muted)}
+
+    /* HERO */
+    .hero{padding:64px 0;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+    .eyebrow{display:inline-block;padding:6px 10px;background:var(--glass);border-radius:999px;color:var(--muted);font-weight:600}
+    h1{font-size:36px;margin:18px 0 8px;line-height:1.02;color:#f8fbff}
+    p.lead{color:var(--muted);font-size:15px;margin:0 0 18px}
+    .hero-ctas{display:flex;gap:12px;align-items:center}
+    .trust{margin-top:16px;color:var(--muted);font-size:13px}
+
+    /* Card sections */
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:34px 0}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .card h3{margin:0 0 8px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+    .explore-btn{margin-top:12px;display:inline-block;padding:8px 12px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);font-weight:600;color:var(--accent2)}
+
+    /* Packages */
+    .packages{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:36px 0}
+    .pkg{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));border:1px solid rgba(255,255,255,0.02)}
+    .pkg h4{margin:0 0 8px}
+    .pkg ul{padding-left:18px;margin:8px 0;color:var(--muted);font-size:14px}
+
+    /* How it works */
+    .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:30px 0}
+    .step{background:var(--card);padding:12px;border-radius:10px;text-align:center}
+    .step small{display:block;color:var(--muted);margin-top:8px}
+
+    /* FAQ */
+    .faq{margin:30px 0}
+    .faq dt{font-weight:700;margin-top:12px}
+    .faq dd{margin:6px 0 12px;color:var(--muted)}
+
+    footer{padding:28px 0;color:var(--muted)}
+
+    /* responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      nav ul{display:none}
+      .packages{grid-template-columns:1fr}
+      .features{grid-template-columns:1fr}
+      .steps{grid-template-columns:repeat(2,1fr)}
+    }
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600}
+    .center{text-align:center}
+
+    /* Form modal */
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:60}
+    .modal .sheet{background:#021025;padding:20px;border-radius:12px;width:100%;max-width:720px;border:1px solid rgba(255,255,255,0.04)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
+    input[type=text],input[type=email],select,textarea{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px;color:#e6eef6;width:100%}
+    textarea{min-height:100px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px}
+    .btn-primary{background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#021018;font-weight:700}
+    .btn-muted{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    .close-x{float:right;cursor:pointer;color:var(--muted)}
+
+  </style>
+</head>
+<body>
+  <header class="container">
+    <div class="nav">
+      <div class="brand">
+        <div class="logo">SS</div>
+        <div>
+          <div style="font-weight:700;color:#f6f8fb">SleekShift</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">Product-first D2C launches</div>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a class="link" href="#home">Home</a></li>
+          <li><a class="link" href="#services">Services</a></li>
+          <li><a class="link" href="#packages">Packages</a></li>
+          <li><a class="link" href="#how">How it works</a></li>
+          <li><a class="link" href="#faqs">FAQs</a></li>
+          <li><a class="link" href="#about">About</a></li>
+        </ul>
+      </nav>
+
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="ghost" onclick="openModal()">Get my Launch Plan</button>
+        <a class="cta" href="#packages">Learn more</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="home">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Transparent pricing • 2–4 week launches • UK-based team</div>
+        <h1>Launch your D2C brand in weeks — with packaging that ships and a store that converts.</h1>
+        <p class="lead">Branding, ecommerce stores and packaging engineered for founders who want speed and production-ready deliverables. Book a 20‑min Launch Plan — we’ll send a one-page estimate.</p>
+        <div class="hero-ctas">
+          <button class="cta" onclick="openModal()">Get my Launch Plan</button>
+          <a class="ghost" href="#services">Learn more</a>
+        </div>
+        <div class="trust">Trusted by founders — production-ready dielines & shop setups. Mobile-first, VAT-ready for the UK.</div>
+      </div>
+
+      <aside style="background:linear-gradient(180deg, rgba(124,58,237,0.12), rgba(94,234,212,0.04));padding:20px;border-radius:12px">
+        <h3 style="color:#f6f8fb;margin:0">What we build</h3>
+        <p style="color:var(--muted);margin:6px 0 12px">Brand systems, conversion-first stores, and packaging that meets UK retail requirements.</p>
+        <div style="display:grid;gap:8px">
+          <div class="pill">Starter: 2–4 weeks</div>
+          <div class="pill">Core: 4–6 weeks</div>
+          <div class="pill">Maintenance add-on</div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="services">
+      <div class="features">
+        <div class="card">
+          <h3>Brand Identity That Stands Out</h3>
+          <p>Stand out at a glance and stay consistent everywhere — naming, logo systems, and visual identity for packaging and retail.</p>
+          <a class="explore-btn" href="#branding">Explore: Branding</a>
+        </div>
+        <div class="card">
+          <h3>A Store That Earns the Yes</h3>
+          <p>Fast, mobile-first shops with checkout tuned to reduce drop-off and increase repeat purchases.</p>
+          <a class="explore-btn" href="#store">Explore: Store</a>
+        </div>
+
+        <div class="card">
+          <h3>People Search Before They Trust</h3>
+          <p>Local listings and focused pages aligned to real searches so you appear where buyers look.</p>
+          <a class="explore-btn" href="#search">Explore: Search & Local</a>
+        </div>
+        <div class="card">
+          <h3>Packaging That Brings a Smile</h3>
+          <p>Print-ready dielines, label compliance, and inserts that protect in transit and delight on arrival.</p>
+          <a class="explore-btn" href="#packaging">Explore: Packaging</a>
+        </div>
+
+        <div class="card">
+          <h3>Sourcing & Production You Can Trust</h3>
+          <p>Supplier benchmarking, sample validation and pre-shipment checks to scale with confidence.</p>
+          <a class="explore-btn" href="#sourcing">Explore: Sourcing</a>
+        </div>
+        <div class="card">
+          <h3>Maintenance & Support</h3>
+          <p>Monthly care pack for updates, backups and quick fixes so the store stays healthy after launch.</p>
+          <a class="explore-btn" href="#maintenance">Explore: Maintenance</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="packages">
+      <h2 style="color:#f6f8fb">Packages</h2>
+      <div class="packages">
+        <div class="pkg">
+          <h4>Starter — Fast First Order</h4>
+          <p class="muted">Launch essentials for a single SKU or test product. 2–4 weeks.</p>
+          <ul>
+            <li>20-minute discovery + one-page plan</li>
+            <li>Wordmark + one logo concept (1 revision)</li>
+            <li>One product page template (Shopify / Comez)</li>
+            <li>Print-ready dieline for primary pack</li>
+          </ul>
+          <div style="margin-top:10px"><button class="btn btn-primary" onclick="openModal()">Request Launch Plan</button></div>
+        </div>
+
+        <div class="pkg">
+          <h4>Core — Confident Launch (recommended)</h4>
+          <p class="muted">Complete D2C + retail-ready launch for multiple SKUs. 4–6 weeks.</p>
+          <ul>
+            <li>Full brand system & usage notes</li>
+            <li>Up to 5 product page templates</li>
+            <li>Print-ready dielines & label checks</li>
+            <li>30 days post-launch support</li>
+          </ul>
+          <div style="margin-top:10px"><button class="btn btn-primary" onclick="openModal()">Request Launch Plan</button></div>
+        </div>
+
+        <div class="pkg">
+          <h4>Ultimate — Bespoke & Retail-Grade</h4>
+          <p class="muted">Invite-only for complex multi-SKU or retail buy-in launches.</p>
+          <ul>
+            <li>Discovery workshop & strategic roadmap</li>
+            <li>Supplier benchmarking & onsite QA (optional)</li>
+            <li>Marketing asset pack + monthly growth reviews</li>
+          </ul>
+          <div style="margin-top:10px"><button class="btn btn-primary" onclick="openModal()">Apply / Request</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <h2 style="color:#f6f8fb">How it works — quick, predictable launches</h2>
+      <div class="steps" style="margin-top:12px">
+        <div class="step"><strong>1</strong><small>Call (20 min)</small></div>
+        <div class="step"><strong>2</strong><small>One-page Launch Plan (24 hrs)</small></div>
+        <div class="step"><strong>3</strong><small>Build (2–6 wks)</small></div>
+        <div class="step"><strong>4</strong><small>Launch & QA</small></div>
+        <div class="step"><strong>5</strong><small>Grow & Maintain</small></div>
+      </div>
+    </section>
+
+    <section id="faqs">
+      <h2 style="color:#f6f8fb">FAQs</h2>
+      <dl class="faq">
+        <dt>Are you UK-based?</dt>
+        <dd>Yes. Strategy and governance sit in the UK with delivery partners in India.</dd>
+        <dt>Subscription or one-off?</dt>
+        <dd>Both. Fixed-scope launch + optional monthly maintenance subscription.</dd>
+        <dt>Which carts and payment gateways?</dt>
+        <dd>We support our in-house platform Comez, Shopify / Shopify Plus, Stripe, PayPal and common wallets.</dd>
+      </dl>
+    </section>
+
+    <section id="about">
+      <h2 style="color:#f6f8fb">About SleekShift</h2>
+      <p class="muted">We help founders launch D2C brands fast — production-ready packaging, conversion-first stores and supplier-ready sourcing. One accountable UK team + vetted partners.</p>
+
+      <div style="display:flex;gap:18px;margin-top:16px;flex-wrap:wrap">
+        <div style="min-width:220px;padding:12px;background:var(--card);border-radius:10px">Starter timeline: 2–4 weeks · Weekly check-ins · 30-day support</div>
+        <div style="min-width:220px;padding:12px;background:var(--card);border-radius:10px">VAT & UK-ready by default · Label compliance · Barcode setup</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <div>
+        <strong>SleekShift</strong><br>
+        <small class="muted">UK-based D2C launch partners · Privacy & Cookies configured for UK GDPR</small>
+      </div>
+      <div>
+        <small class="muted">© SleekShift — All rights reserved</small>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal form -->
+  <div class="modal" id="modal">
+    <div class="sheet">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <h3 style="margin:0;color:#f6f8fb">Get your Launch Plan — 20-minute discovery</h3>
+          <div style="color:var(--muted);font-size:13px">Tell us a little, pick a slot, and we’ll send a one-page plan & estimate within 24 hours.</div>
+        </div>
+        <div class="close-x" onclick="closeModal()">✕</div>
+      </div>
+      <form id="leadForm" style="margin-top:14px">
+        <div class="form-row">
+          <div>
+            <label for="name">Name — (required)</label>
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div>
+            <label for="email">Email — (required)</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <label for="company">Company — (optional)</label>
+          <input id="company" name="company" type="text" />
+        </div>
+        <div style="margin-top:10px">
+          <label for="sku">Estimated SKU count — (required)</label>
+          <select id="sku" name="sku" required>
+            <option value="">Choose</option>
+            <option>1</option>
+            <option>2–5</option>
+            <option>6–20</option>
+            <option>20+</option>
+          </select>
+        </div>
+        <div style="margin-top:10px">
+          <label for="what">What are you launching? (one line)</label>
+          <input id="what" name="what" type="text" />
+        </div>
+        <div style="margin-top:10px">
+          <label for="month">Preferred launch month</label>
+          <input id="month" name="month" type="text" placeholder="e.g. September 2026" />
+        </div>
+        <div style="margin-top:10px">
+          <label for="budget">Rough budget (bracket)</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <label><input type="radio" name="budget" value="under3" /> Under £3k</label>
+            <label><input type="radio" name="budget" value="3to5" /> £3k–£5k</label>
+            <label><input type="radio" name="budget" value="5to10" /> £5k–£10k</label>
+            <label><input type="radio" name="budget" value="unsure" /> Unsure / Prefer not to say</label>
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <label for="files">Attach product brief (optional)</label>
+          <input id="files" name="files" type="file" accept=".pdf,.doc,.docx,.png,.jpg" />
+          <div style="font-size:12px;color:var(--muted);margin-top:6px">Max 10MB. For static GitHub Pages the file upload will not be processed without a backend — see notes below.</div>
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center;justify-content:space-between">
+          <label style="font-size:13px;color:var(--muted)"><input type="checkbox" required /> I consent to SleekShift storing my details for this enquiry.</label>
+          <div>
+            <button type="button" class="btn btn-muted" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Send Request</button>
+          </div>
+        </div>
+      </form>
+      <div id="formMsg" style="display:none;margin-top:12px;color:var(--accent2)"></div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(){document.getElementById('modal').style.display='flex'}
+    function closeModal(){document.getElementById('modal').style.display='none'}
+    document.getElementById('leadForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      // For a static site we don't have a backend. Replace this with Formspree, Netlify Forms or an API endpoint.
+      const name = document.getElementById('name').value || '—';
+      document.getElementById('formMsg').style.display='block';
+      document.getElementById('formMsg').innerText = 'Thanks ' + name + '. Request received (local demo). Connect a form provider to process leads.';
+      // clear form
+      setTimeout(()=>{closeModal();document.getElementById('leadForm').reset();document.getElementById('formMsg').style.display='none'},1600);
+    })
+
+    // smooth anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){
+      e.preventDefault(); const id=this.getAttribute('href'); if(id==='#')return; document.querySelector(id).scrollIntoView({behavior:'smooth'});
+    }));
+  </script>
+</body>
 </html>
