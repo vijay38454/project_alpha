@@ -9,55 +9,57 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#0f1724; /* deep slate */
-      --muted:#94a3b8;
-      --glass: rgba(255,255,255,0.04);
-      --card:#0b1220;
-      --accent1:#7c3aed; /* purple */
-      --accent2:#5eead4; /* mint */
+      --bg:#f8f6f2; /* soft cream */
+      --surface:#ffffff; /* cards */
+      --muted:#6b7280; /* neutral muted */
+      --glass: rgba(10,10,10,0.02);
+      --card:#ffffff;
+      --accent1:#7c3aed; /* deep purple */
+      --accent2:#a78bfa; /* pale purple */
+      --text:#0b1220; /* dark text */
       --max-w:1100px;
-      --radius:14px;
+      --radius:12px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:#e6eef6;background:linear-gradient(180deg,#071025 0%, #071528 45%, #041027 100%);-webkit-font-smoothing:antialiased}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
     a{color:inherit;text-decoration:none}
     .container{width:90%;max-width:var(--max-w);margin:0 auto}
 
     /* NAV */
-    header{backdrop-filter: blur(6px);position:sticky;top:12px;z-index:40}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:12px;background:linear-gradient(90deg, rgba(10,13,20,0.6), rgba(8,12,18,0.35));box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    header{position:sticky;top:12px;z-index:40}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:12px;background:rgba(255,255,255,0.9);box-shadow:0 6px 20px rgba(12,15,20,0.06);border:1px solid rgba(15,23,42,0.04)}
     .brand{display:flex;gap:12px;align-items:center}
     .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent1),#5b21b6);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
-.logo-img{width:44px;height:44px;object-fit:contain;border-radius:10px;display:block}
+    .logo-img{width:44px;height:44px;object-fit:contain;border-radius:10px;display:block}
     nav ul{display:flex;gap:18px;align-items:center;margin:0;padding:0;list-style:none}
-    .nav a.link{color:var(--muted);font-weight:500}
-    .cta{background:linear-gradient(90deg,var(--accent2),var(--accent1));padding:10px 16px;border-radius:10px;color:#021018;font-weight:700}
-    .ghost{border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--muted)}
+    .nav a.link{color:var(--muted);font-weight:600}
+    .cta{background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:10px 16px;border-radius:10px;color:white;font-weight:700;box-shadow:0 6px 18px rgba(124,58,237,0.12)}
+    .ghost{border:1px solid rgba(15,23,42,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);background:transparent}
 
     /* HERO */
     .hero{padding:64px 0;display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
-    .eyebrow{display:inline-block;padding:6px 10px;background:var(--glass);border-radius:999px;color:var(--muted);font-weight:600}
-    h1{font-size:36px;margin:18px 0 8px;line-height:1.02;color:#f8fbff}
+    .eyebrow{display:inline-block;padding:6px 10px;background:transparent;border-radius:999px;color:var(--muted);font-weight:600}
+    h1{font-size:36px;margin:18px 0 8px;line-height:1.02;color:var(--text)}
     p.lead{color:var(--muted);font-size:15px;margin:0 0 18px}
     .hero-ctas{display:flex;gap:12px;align-items:center}
     .trust{margin-top:16px;color:var(--muted);font-size:13px}
 
     /* Card sections */
     .features{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:34px 0}
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
+    .card{background:var(--surface);padding:20px;border-radius:12px;border:1px solid rgba(15,23,42,0.04);box-shadow:0 6px 20px rgba(12,15,20,0.04)}
     .card h3{margin:0 0 8px}
     .card p{margin:0;color:var(--muted);font-size:14px}
-    .explore-btn{margin-top:12px;display:inline-block;padding:8px 12px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);font-weight:600;color:var(--accent2)}
+    .explore-btn{margin-top:12px;display:inline-block;padding:8px 12px;border-radius:8px;background:transparent;border:1px solid rgba(15,23,42,0.04);font-weight:600;color:var(--accent1)}
 
     /* Packages */
     .packages{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:36px 0}
-    .pkg{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));border:1px solid rgba(255,255,255,0.02)}
+    .pkg{padding:18px;border-radius:12px;background:var(--surface);border:1px solid rgba(15,23,42,0.04);box-shadow:0 10px 30px rgba(12,15,20,0.03)}
     .pkg h4{margin:0 0 8px}
     .pkg ul{padding-left:18px;margin:8px 0;color:var(--muted);font-size:14px}
 
     /* How it works */
     .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:30px 0}
-    .step{background:var(--card);padding:12px;border-radius:10px;text-align:center}
+    .step{background:transparent;padding:12px;border-radius:10px;text-align:center;border:1px solid rgba(15,23,42,0.03)}
     .step small{display:block;color:var(--muted);margin-top:8px}
 
     /* FAQ */
@@ -78,19 +80,19 @@
 
     /* small utilities */
     .muted{color:var(--muted)}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:600}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:transparent;font-weight:600;border:1px solid rgba(15,23,42,0.04)}
     .center{text-align:center}
 
     /* Form modal */
-    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:60}
-    .modal .sheet{background:#021025;padding:20px;border-radius:12px;width:100%;max-width:720px;border:1px solid rgba(255,255,255,0.04)}
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.06);display:none;align-items:center;justify-content:center;padding:20px;z-index:60}
+    .modal .sheet{background:var(--surface);padding:20px;border-radius:12px;width:100%;max-width:720px;border:1px solid rgba(15,23,42,0.04);box-shadow:0 20px 40px rgba(12,15,20,0.06)}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
-    input[type=text],input[type=email],select,textarea{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px;color:#e6eef6;width:100%}
+    input[type=text],input[type=email],select,textarea{background:transparent;border:1px solid rgba(15,23,42,0.06);padding:10px;border-radius:8px;color:var(--text);width:100%}
     textarea{min-height:100px}
     .btn{display:inline-block;padding:10px 14px;border-radius:10px}
-    .btn-primary{background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#021018;font-weight:700}
-    .btn-muted{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;font-weight:700}
+    .btn-muted{background:transparent;border:1px solid rgba(15,23,42,0.06);color:var(--muted)}
     .close-x{float:right;cursor:pointer;color:var(--muted)}
 
   </style>
@@ -127,7 +129,7 @@
   <main class="container" id="home">
     <section class="hero">
       <div>
-        <div class="eyebrow">Transparent pricing • 2–4 week launches • UK-based</div>
+        <div class="eyebrow">Transparent pricing • 2–4 week launches • UK-based team</div>
         <h1>Launch your D2C brand in weeks — with packaging that ships and a store that converts.</h1>
         <p class="lead">Branding, ecommerce stores and packaging engineered for founders who want speed and production-ready deliverables. Book a 20‑min Launch Plan — we’ll send a one-page estimate.</p>
         <div class="hero-ctas">
