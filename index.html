@@ -7,17 +7,15 @@
 <meta name="description" content="SleekShift — We’re building something useful. Contact: contact@sleekshift.co.uk" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fdfcfb;
+    --bg: #f8faff; /* Very subtle cool white */
     --text: #0f172a;
     --muted: #64748b;
     --brand-purple: #7c3aed;
-    --brand-light: #ddd6fe;
-    --card-bg: rgba(255, 255, 255, 0.7);
-    --card-border: rgba(255, 255, 255, 0.8);
-    --pad: 40px;
+    --card-bg: rgba(255, 255, 255, 0.65);
+    --card-border: rgba(255, 255, 255, 0.9);
   }
 
   * { box-sizing: border-box; }
@@ -28,8 +26,7 @@
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     color: var(--text);
     background: var(--bg);
-    -webkit-font-smoothing: antialiased;
-    overflow: hidden; /* Prevent scrollbars from falling flakes */
+    overflow: hidden;
   }
 
   a { text-decoration: none; transition: 0.2s ease; }
@@ -37,130 +34,116 @@
   /* --- ANIMATED BACKGROUND LAYER --- */
   .bg-layer {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,1) 0%, rgba(245,243,255,1) 100%);
+    background: radial-gradient(circle at 50% -20%, rgba(240,235,255,0.8) 0%, rgba(255,255,255,0) 60%);
   }
 
   /* --- PURPLE BLURRY SNOWFLAKES (CSS Particles) --- */
   .snow-container {
     position: fixed; inset: 0; z-index: 1; pointer-events: none;
-    overflow: hidden;
   }
   
   .flake {
     position: absolute;
     top: -10%;
-    background: radial-gradient(circle, var(--brand-purple) 0%, transparent 80%);
-    opacity: 0.6;
+    background: var(--brand-purple);
     border-radius: 50%;
-    filter: blur(6px); /* The "blurry" effect */
+    filter: blur(8px); /* The "blurry" effect */
     animation: fall linear infinite;
+    opacity: 0;
   }
-
-  /* Randomizing particle sizes and opacity slightly via classes would be ideal, 
-     but we use nth-child in CSS to vary them below */
   
   @keyframes fall {
     0% { transform: translateY(-10vh) translateX(-10px); opacity: 0; }
-    20% { opacity: 0.8; }
+    20% { opacity: 0.5; } /* Lower opacity for subtlety */
     50% { transform: translateY(50vh) translateX(10px); }
     100% { transform: translateY(110vh) translateX(-10px); opacity: 0; }
   }
 
-  /* Generating variations for the flakes */
-  .flake:nth-child(1) { left: 10%; width: 20px; height: 20px; animation-duration: 12s; animation-delay: 0s; }
-  .flake:nth-child(2) { left: 25%; width: 15px; height: 15px; animation-duration: 15s; animation-delay: 2s; background: var(--brand-light); filter: blur(4px); }
-  .flake:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-duration: 18s; animation-delay: 1s; opacity: 0.4; }
-  .flake:nth-child(4) { left: 55%; width: 10px; height: 10px; animation-duration: 10s; animation-delay: 5s; }
-  .flake:nth-child(5) { left: 70%; width: 30px; height: 30px; animation-duration: 14s; animation-delay: 0.5s; filter: blur(8px); }
-  .flake:nth-child(6) { left: 85%; width: 18px; height: 18px; animation-duration: 11s; animation-delay: 3s; background: #a78bfa; }
-  .flake:nth-child(7) { left: 15%; width: 12px; height: 12px; animation-duration: 16s; animation-delay: 7s; }
-  .flake:nth-child(8) { left: 60%; width: 22px; height: 22px; animation-duration: 13s; animation-delay: 4s; }
-  .flake:nth-child(9) { left: 90%; width: 14px; height: 14px; animation-duration: 19s; animation-delay: 2s; }
+  /* Generating variations */
+  .flake:nth-child(1) { left: 10%; width: 20px; height: 20px; animation-duration: 14s; animation-delay: 0s; }
+  .flake:nth-child(2) { left: 25%; width: 15px; height: 15px; animation-duration: 18s; animation-delay: 2s; background: #a78bfa; filter: blur(5px); }
+  .flake:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-duration: 20s; animation-delay: 1s; opacity: 0.3; }
+  .flake:nth-child(4) { left: 55%; width: 10px; height: 10px; animation-duration: 12s; animation-delay: 5s; }
+  .flake:nth-child(5) { left: 75%; width: 30px; height: 30px; animation-duration: 16s; animation-delay: 0.5s; filter: blur(12px); }
+  .flake:nth-child(6) { left: 85%; width: 18px; height: 18px; animation-duration: 13s; animation-delay: 3s; background: #ddd6fe; }
 
-  /* --- HEADER --- */
-  header.site-header {
-    position: fixed; 
-    left: var(--pad); 
-    top: var(--pad); 
-    z-index: 10; 
-    display: flex; 
-    align-items: center; /* Crucial for vertical alignment */
-    gap: 10px;
-  }
-
-  .logo-container {
-    display: flex; 
-    align-items: center; 
+  /* --- LAYOUT --- */
+  .page-wrapper {
+    position: relative;
+    z-index: 5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Stack logo above card */
+    align-items: center;
     justify-content: center;
-    width: 36px; 
-    height: 36px;
-    background: linear-gradient(135deg, var(--brand-purple), #a78bfa);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
-  }
-
-  .logo-container img {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    border-radius: 8px;
-  }
-  
-  /* Fallback if no image, we keep the gradient box */
-  .brand-name {
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--text);
-    letter-spacing: -0.02em; /* Tighter tracking for premium feel */
-    line-height: 1; /* Helps alignment */
-    padding-top: 2px; /* Optical adjustment */
-  }
-
-  /* --- MAIN CONTENT --- */
-  .center {
-    position: relative; 
-    z-index: 5; 
-    min-height: 100vh; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
     padding: 20px;
   }
 
+  /* --- HEADER (Now Centered) --- */
+  header.site-header {
+    margin-bottom: 32px; /* Space between logo and card */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  /* Logo container cleaned up - No purple tint */
+  .logo-container {
+    width: 40px; 
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Removed background-color/gradient to fix tint issue */
+  }
+
+  .logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    /* If your SVG is black, it will show black. If transparent, it works perfectly. */
+  }
+  
+  .brand-name {
+    font-weight: 700;
+    font-size: 20px; /* Slightly larger for center stage */
+    color: var(--text);
+    letter-spacing: -0.03em;
+  }
+
+  /* --- GLASS CARD --- */
   .glass-card {
-    width: 100%; 
-    max-width: 600px; 
+    width: 100%;
+    max-width: 540px;
     text-align: center;
     background: var(--card-bg);
-    backdrop-filter: blur(20px); /* Frosted glass effect */
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--card-border);
     border-radius: 24px;
-    padding: 64px 40px;
+    padding: 60px 48px;
     box-shadow: 
       0 4px 6px -1px rgba(0, 0, 0, 0.01), 
-      0 20px 40px -6px rgba(124, 58, 237, 0.06); /* Purple tinted shadow */
+      0 20px 40px -12px rgba(124, 58, 237, 0.08); /* Soft purple shadow glow */
   }
 
   h1 {
     font-size: 42px;
     margin: 0 0 16px;
-    line-height: 1.1;
+    line-height: 1.05;
     font-weight: 800;
     letter-spacing: -0.04em;
-    background: linear-gradient(to bottom, #0f172a, #334155);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #0f172a;
   }
 
   p.lead {
     margin: 0 auto 32px;
     color: var(--muted);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 400;
-    line-height: 1.6;
-    max-width: 400px;
+    line-height: 1.5;
   }
 
   .cta-group {
@@ -176,26 +159,25 @@
     justify-content: center;
     height: 48px;
     padding: 0 32px;
-    border-radius: 99px; /* Pill shape */
+    border-radius: 99px;
     font-weight: 600;
     font-size: 15px;
     color: white;
-    background: #0f172a; /* Dark button for high contrast */
-    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
-    transition: all 0.3s ease;
+    background: #0f172a;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+    transition: all 0.25s ease;
   }
 
   .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 30px rgba(124, 58, 237, 0.25);
     background: var(--brand-purple);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
   }
 
   .email-link {
     font-size: 13px;
     color: var(--muted);
-    font-weight: 500;
-    opacity: 0.8;
+    opacity: 0.7;
   }
   .email-link:hover { opacity: 1; color: var(--brand-purple); }
 
@@ -203,7 +185,6 @@
   @media (max-width: 600px) {
     h1 { font-size: 32px; }
     .glass-card { padding: 40px 24px; }
-    header.site-header { left: 20px; top: 20px; }
   }
 </style>
 </head>
@@ -218,28 +199,27 @@
     <div class="flake"></div>
     <div class="flake"></div>
     <div class="flake"></div>
-    <div class="flake"></div>
-    <div class="flake"></div>
-    <div class="flake"></div>
   </div>
 
-  <header class="site-header">
-    <div class="logo-container">
-      <img src="SSLogo.svg" alt="Logo" onerror="this.style.display='none'"> 
-    </div>
-    <div class="brand-name">SleekShift</div>
-  </header>
+  <main class="page-wrapper">
+    
+    <header class="site-header">
+      <div class="logo-container">
+        <img src="SSLogo.svg" alt="Logo" onerror="this.style.display='none'"> 
+      </div>
+      <div class="brand-name">SleekShift</div>
+    </header>
 
-  <main class="center">
     <section class="glass-card">
       <h1>We’re building<br>something useful.</h1>
-      <p class="lead">Crafting the future of tools. <br>Join us for the launch.</p>
+      <p class="lead">Crafting the future of tools.<br>Join us for the launch.</p>
 
       <div class="cta-group">
         <a class="btn" href="mailto:contact@sleekshift.co.uk">Get in touch</a>
         <a href="mailto:contact@sleekshift.co.uk" class="email-link">contact@sleekshift.co.uk</a>
       </div>
     </section>
+
   </main>
 
 </body>
