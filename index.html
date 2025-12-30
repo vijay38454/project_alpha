@@ -5,120 +5,242 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>SleekShift — Coming soon</title>
 <meta name="description" content="SleekShift — We’re building something useful. Contact: contact@sleekshift.co.uk" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #f8f6f2;
-    --card: #ffffff;
-    --text: #0b1220;
-    --muted: #6b7280;
-    --accent1: #7c3aed; /* purple */
-    --accent2: #a78bfa; /* lilac */
-    --maxw: 1100px;
-    --pad: 48px;
+  :root {
+    --bg: #fdfcfb;
+    --text: #0f172a;
+    --muted: #64748b;
+    --brand-purple: #7c3aed;
+    --brand-light: #ddd6fe;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --card-border: rgba(255, 255, 255, 0.8);
+    --pad: 40px;
   }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
 
-  /* PAGE LAYOUT */
-  .page{min-height:100vh;position:relative;overflow:hidden}
-  /* animated background layer behind everything */
-  .bg {
-    position:fixed; inset:0; z-index:0; pointer-events:none;
-    background: radial-gradient(circle at 10% 20%, rgba(124,58,237,0.06) 0px, rgba(124,58,237,0.03) 160px, transparent 420px),
-                radial-gradient(circle at 90% 80%, rgba(167,139,250,0.04) 0px, rgba(167,139,250,0.02) 160px, transparent 420px);
-    /* subtle moving overlay */
-    background-size: 120% 120%;
-    animation: bg-pan 22s linear infinite;
-    filter: saturate(1.02);
+  * { box-sizing: border-box; }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden; /* Prevent scrollbars from falling flakes */
   }
-  @keyframes bg-pan{ 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(-6px,-6px,0)} 100%{transform:translate3d(0,0,0)} }
 
-  /* soft flowing gradient overlay using pseudo-elements */
-  .bg::before, .bg::after {
-    content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-    background: radial-gradient(600px 600px at 10% 12%, rgba(124,58,237,0.06), transparent 18%),
-                radial-gradient(500px 500px at 85% 82%, rgba(167,139,250,0.04), transparent 24%);
-    mix-blend-mode:screen; opacity:0.95; filter: blur(32px);
+  a { text-decoration: none; transition: 0.2s ease; }
+
+  /* --- ANIMATED BACKGROUND LAYER --- */
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,1) 0%, rgba(245,243,255,1) 100%);
   }
-  .bg::after { animation: shift 30s ease-in-out infinite; transform-origin:center; }
-  @keyframes shift { 0%{transform:translate3d(0,0,0)}50%{transform:translate3d(12px,8px,0)}100%{transform:translate3d(0,0,0)} }
 
-  /* header top-left with logo */
+  /* --- PURPLE BLURRY SNOWFLAKES (CSS Particles) --- */
+  .snow-container {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    overflow: hidden;
+  }
+  
+  .flake {
+    position: absolute;
+    top: -10%;
+    background: radial-gradient(circle, var(--brand-purple) 0%, transparent 80%);
+    opacity: 0.6;
+    border-radius: 50%;
+    filter: blur(6px); /* The "blurry" effect */
+    animation: fall linear infinite;
+  }
+
+  /* Randomizing particle sizes and opacity slightly via classes would be ideal, 
+     but we use nth-child in CSS to vary them below */
+  
+  @keyframes fall {
+    0% { transform: translateY(-10vh) translateX(-10px); opacity: 0; }
+    20% { opacity: 0.8; }
+    50% { transform: translateY(50vh) translateX(10px); }
+    100% { transform: translateY(110vh) translateX(-10px); opacity: 0; }
+  }
+
+  /* Generating variations for the flakes */
+  .flake:nth-child(1) { left: 10%; width: 20px; height: 20px; animation-duration: 12s; animation-delay: 0s; }
+  .flake:nth-child(2) { left: 25%; width: 15px; height: 15px; animation-duration: 15s; animation-delay: 2s; background: var(--brand-light); filter: blur(4px); }
+  .flake:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-duration: 18s; animation-delay: 1s; opacity: 0.4; }
+  .flake:nth-child(4) { left: 55%; width: 10px; height: 10px; animation-duration: 10s; animation-delay: 5s; }
+  .flake:nth-child(5) { left: 70%; width: 30px; height: 30px; animation-duration: 14s; animation-delay: 0.5s; filter: blur(8px); }
+  .flake:nth-child(6) { left: 85%; width: 18px; height: 18px; animation-duration: 11s; animation-delay: 3s; background: #a78bfa; }
+  .flake:nth-child(7) { left: 15%; width: 12px; height: 12px; animation-duration: 16s; animation-delay: 7s; }
+  .flake:nth-child(8) { left: 60%; width: 22px; height: 22px; animation-duration: 13s; animation-delay: 4s; }
+  .flake:nth-child(9) { left: 90%; width: 14px; height: 14px; animation-duration: 19s; animation-delay: 2s; }
+
+  /* --- HEADER --- */
   header.site-header {
-    position:fixed; left:var(--pad); top:var(--pad); z-index:11; display:flex; align-items:center; gap:12px;
-    background:transparent;
+    position: fixed; 
+    left: var(--pad); 
+    top: var(--pad); 
+    z-index: 10; 
+    display: flex; 
+    align-items: center; /* Crucial for vertical alignment */
+    gap: 10px;
   }
-  header .logo { display:flex; gap:12px; align-items:center; }
-  header .logo img {
-    width:64px; height:64px; object-fit:contain; border-radius:12px;
-    background: linear-gradient(135deg, var(--accent1), var(--accent2));
-    box-shadow: 0 12px 32px rgba(124,58,237,0.12);
-    display:block;
-  }
-  header .brand { font-weight:800; font-size:18px; color:var(--text); margin-left:2px; }
 
-  /* center container for the hero */
+  .logo-container {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    width: 36px; 
+    height: 36px;
+    background: linear-gradient(135deg, var(--brand-purple), #a78bfa);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+  }
+
+  .logo-container img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    border-radius: 8px;
+  }
+  
+  /* Fallback if no image, we keep the gradient box */
+  .brand-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    letter-spacing: -0.02em; /* Tighter tracking for premium feel */
+    line-height: 1; /* Helps alignment */
+    padding-top: 2px; /* Optical adjustment */
+  }
+
+  /* --- MAIN CONTENT --- */
   .center {
-    position:relative; z-index:10; min-height:100vh; display:flex; align-items:center; justify-content:center; padding: calc(var(--pad) * 0.5);
+    position: relative; 
+    z-index: 5; 
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 20px;
   }
-  .hero {
-    width:100%; max-width:920px; margin:0 auto; text-align:center;
-    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
-    border-radius:16px; padding:48px 48px; box-shadow: 0 30px 80px rgba(11,18,32,0.06); border:1px solid rgba(11,18,32,0.03);
-  }
-  h1 { font-size:48px; margin:0 0 12px; line-height:1.02; font-weight:800 }
-  p.lead { margin:0 0 18px; color:var(--muted); font-size:16px }
 
-  .cta { margin-top:8px; display:flex; flex-direction:column; align-items:center; gap:12px }
+  .glass-card {
+    width: 100%; 
+    max-width: 600px; 
+    text-align: center;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 64px 40px;
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.01), 
+      0 20px 40px -6px rgba(124, 58, 237, 0.06); /* Purple tinted shadow */
+  }
+
+  h1 {
+    font-size: 42px;
+    margin: 0 0 16px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    background: linear-gradient(to bottom, #0f172a, #334155);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  p.lead {
+    margin: 0 auto 32px;
+    color: var(--muted);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 400px;
+  }
+
+  .cta-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
   .btn {
-    display:inline-block; padding:12px 20px; border-radius:12px; font-weight:700; color:white;
-    background: linear-gradient(90deg, var(--accent1), var(--accent2));
-    box-shadow: 0 20px 48px rgba(124,58,237,0.12);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 32px;
+    border-radius: 99px; /* Pill shape */
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    background: #0f172a; /* Dark button for high contrast */
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+    transition: all 0.3s ease;
   }
-  .contact-line { margin-top:8px; color:var(--muted); font-size:14px }
 
-  /* responsive */
-  @media (max-width:880px){
-    header.site-header { left:20px; top:20px; }
-    header .logo img { width:52px; height:52px; }
-    h1 { font-size:30px }
-    .hero { padding:28px; border-radius:12px; }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(124, 58, 237, 0.25);
+    background: var(--brand-purple);
   }
 
-  /* accessibility: respect reduced motion */
-  @media (prefers-reduced-motion: reduce){
-    .bg, .bg::after, .bg::before { animation: none !important; transform:none !important; filter:none !important }
+  .email-link {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+    opacity: 0.8;
+  }
+  .email-link:hover { opacity: 1; color: var(--brand-purple); }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 600px) {
+    h1 { font-size: 32px; }
+    .glass-card { padding: 40px 24px; }
+    header.site-header { left: 20px; top: 20px; }
   }
 </style>
 </head>
 <body>
-  <div class="page">
-    <!-- BACKGROUND -->
-    <div class="bg" aria-hidden="true"></div>
 
-    <!-- HEADER (logo + brand top-left) -->
-    <header class="site-header" role="banner" aria-label="SleekShift">
-      <div class="logo" aria-hidden="false">
-        <img src="SSLogo.svg" alt="SleekShift logo"
-             onerror="this.onerror=null;this.src='SSLogo.jpeg'; console.warn('SSLogo.svg missing — falling back to SSLogo.jpeg')">
-        <div class="brand">SleekShift</div>
-      </div>
-    </header>
+  <div class="bg-layer"></div>
 
-    <!-- CENTER HERO -->
-    <main class="center" role="main" aria-labelledby="site-title">
-      <section class="hero" aria-labelledby="site-title">
-        <h1 id="site-title">We’re building something useful.</h1>
-        <p class="lead">Launching soon.</p>
-
-        <div class="cta" role="group" aria-label="Contact">
-          <a class="btn" href="mailto:contact@sleekshift.co.uk" title="Email SleekShift">Contact us</a>
-          <div class="contact-line">contact@sleekshift.co.uk</div>
-        </div>
-      </section>
-    </main>
+  <div class="snow-container" aria-hidden="true">
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
   </div>
+
+  <header class="site-header">
+    <div class="logo-container">
+      <img src="SSLogo.svg" alt="Logo" onerror="this.style.display='none'"> 
+    </div>
+    <div class="brand-name">SleekShift</div>
+  </header>
+
+  <main class="center">
+    <section class="glass-card">
+      <h1>We’re building<br>something useful.</h1>
+      <p class="lead">Crafting the future of tools. <br>Join us for the launch.</p>
+
+      <div class="cta-group">
+        <a class="btn" href="mailto:contact@sleekshift.co.uk">Get in touch</a>
+        <a href="mailto:contact@sleekshift.co.uk" class="email-link">contact@sleekshift.co.uk</a>
+      </div>
+    </section>
+  </main>
+
 </body>
 </html>
