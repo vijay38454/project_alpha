@@ -4,277 +4,141 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>SleekShift — Launching Soon</title>
-<meta name="description" content="SleekShift — We’re building something useful. Launching soon. Contact: contact@sleekshift.co.uk" />
+<meta name="description" content="SleekShift — We’re building something useful. Contact: contact@sleekshift.co.uk" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-<!--
-  NOTE: This page intentionally keeps full visual richness everywhere.
-  If you want to disable heavy animation for phones later, remove/comment the <canvas> and the JS particle section (search for "PARTICLE CANVAS" comments).
--->
 <style>
   :root{
     --bg:#f8f6f2;
-    --surface:#ffffff;
-    --text:#0b1220;
-    --muted:#6b7280;
-    --accent1:#7c3aed;
-    --accent2:#a78bfa;
-    --radius:16px;
-    --container:1100px;
+    --card: #ffffff;
+    --text: #0b1220;
+    --muted: #6b7280;
+    --accent1: #7c3aed;
+    --accent2: #a78bfa;
+    --maxw: 1100px;
   }
   *{box-sizing:border-box}
   html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
-  a{color:inherit}
+  a{color:inherit;text-decoration:none}
+  /* layout */
   .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 20px;position:relative;overflow:hidden}
+  .container{width:100%;max-width:var(--maxw);display:flex;flex-direction:column;gap:28px;align-items:center;z-index:5;position:relative}
+  header{display:flex;align-items:center;gap:14px;width:100%;justify-content:flex-start}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo img{width:64px;height:64px;object-fit:contain;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 12px 36px rgba(124,58,237,0.10)}
+  .brand{font-weight:800;font-size:18px}
+  /* hero */
+  .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:40px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.95));box-shadow:0 18px 46px rgba(11,18,32,0.06);border:1px solid rgba(11,18,32,0.03);min-width:320px}
+  h1{font-size:40px;margin:8px 0 12px;line-height:1.02}
+  p.sub{margin:0;color:var(--muted);font-size:16px}
+  .cta{margin-top:18px;display:flex;gap:12px;align-items:center}
+  .btn{padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;font-weight:700;box-shadow:0 16px 36px rgba(124,58,237,0.12)}
+  .mail{margin-top:12px;color:var(--muted);font-size:14px}
+  /* footer small */
+  footer{margin-top:10px;color:var(--muted);font-size:13px}
+  /* responsive */
+  @media (max-width:720px){ h1{font-size:28px} .logo img{width:52px;height:52px} .hero{padding:28px} }
 
-  /* BACKDROP (SVG blobs + particle canvas + vignette) */
-  .backdrop{position:absolute;inset:0;z-index:0;pointer-events:none}
-  .vignette{position:absolute;inset:0;z-index:1;pointer-events:none;background:
-    radial-gradient(50% 50% at 12% 18%, rgba(124,58,237,0.06), transparent 16%),
-    radial-gradient(45% 40% at 88% 78%, rgba(167,139,250,0.04), transparent 28%);}
-
-  /* main card */
-  .card{position:relative;z-index:12;width:100%;max-width:var(--container);display:grid;grid-template-columns:1fr 400px;gap:28px;align-items:center;padding:28px;border-radius:calc(var(--radius) + 6px);background:linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.96));box-shadow:0 22px 60px rgba(11,18,32,0.08);border:1px solid rgba(11,18,32,0.04);backdrop-filter: blur(6px);overflow:visible;}
-
-  .left{padding:6px}
-  .brand{display:flex;gap:12px;align-items:center}
-  .brand img{width:64px;height:64px;object-fit:contain;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 12px 40px rgba(124,58,237,0.12)}
-  .brand h2{margin:0;font-size:18px;font-weight:800}
-  .brand small{display:block;color:var(--muted);font-weight:600;margin-top:2px;font-size:12px}
-
-  h1{font-size:44px;margin:18px 0 8px;line-height:1.02}
-  p.lead{color:var(--muted);margin:0 0 16px;font-size:15px}
-
-  .ctas{display:flex;gap:12px;align-items:center;margin-top:12px}
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;font-weight:700;text-decoration:none;color:white;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 20px 46px rgba(124,58,237,0.16);transition:transform .14s ease,box-shadow .14s ease}
-  .btn:active{transform:translateY(1px)}
-  .btn-ghost{background:transparent;border:1px solid rgba(11,18,32,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);font-weight:600}
-  .contact-row{margin-top:14px;display:flex;gap:10px;align-items:center;color:var(--muted);font-size:14px}
-  .mailbox{padding:8px 12px;border-radius:10px;background:var(--surface);border:1px solid rgba(11,18,32,0.04);box-shadow:0 12px 28px rgba(11,18,32,0.04);display:inline-flex;align-items:center;gap:8px}
-  .mailbox a{font-weight:700}
-
-  .right{padding:20px;border-radius:14px;background:linear-gradient(180deg, rgba(124,58,237,0.06), rgba(167,139,250,0.02));border:1px solid rgba(124,58,237,0.06);box-shadow:0 12px 30px rgba(124,58,237,0.06);position:relative;overflow:visible}
-  .right h3{margin:0 0 8px;font-size:18px}
-  .right p{margin:0;color:var(--muted);font-size:14px}
-  .badge{display:inline-block;padding:8px 10px;border-radius:999px;font-weight:700;font-size:13px;color:white;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 10px 26px rgba(124,58,237,0.10);margin-top:12px}
-
-  .foreground{position:absolute;right:-90px;top:-90px;width:380px;height:380px;z-index:11;pointer-events:none;filter:drop-shadow(0 30px 60px rgba(124,58,237,0.06));animation:floaty 10s ease-in-out infinite}
-  @keyframes floaty{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-18px) rotate(6deg)}100%{transform:translateY(0) rotate(0deg)}}
-
-  @media (max-width:980px){
-    .card{grid-template-columns:1fr;padding:18px;gap:16px}
-    h1{font-size:30px}
+  /* BACKGROUND: constant flowing gradient + slow morphing SVG blobs (no mouse interaction) */
+  .bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .flow {
+    position:absolute;inset:0;
+    background: linear-gradient(120deg,#f8f6f2 0%, #fbf9f7 40%, #fff 100%);
+    /* subtle moving gradient overlay */
+    background-size: 300% 300%;
+    animation: bgFlow 18s linear infinite;
+    opacity:1;
+    mix-blend-mode:normal;
+  }
+  @keyframes bgFlow{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
   }
 
-  .reveal{opacity:0;transform:translateY(8px);animation:revealUp .64s ease forwards}
-  .reveal.delay-1{animation-delay:.12s}.reveal.delay-2{animation-delay:.26s}.reveal.delay-3{animation-delay:.42s}
-  @keyframes revealUp{to{opacity:1;transform:none}}
-
-  .muted{color:var(--muted)}
-  .btn:focus{outline:3px solid rgba(124,58,237,0.12);outline-offset:3px}
+  /* SVG blob layer */
+  .blob-layer{position:absolute;inset:0}
+  .blob-svg{width:100%;height:100%;display:block}
+  /* subtle overlay vignette to lift content */
+  .vignette{position:absolute;inset:0;background:radial-gradient(60% 60% at 10% 10%, rgba(124,58,237,0.04), rgba(255,255,255,0) 25%), radial-gradient(50% 40% at 90% 80%, rgba(167,139,250,0.03), transparent 30%);mix-blend-mode:normal;opacity:1}
+  
+  /* reduce-motion: stop animations for users who prefer less motion */
+  @media (prefers-reduced-motion: reduce){
+    .flow{animation: none !important}
+    .blob-svg path, .blob-svg animate { animation: none !important }
+  }
 </style>
 </head>
 <body>
-  <div class="page" role="main" aria-labelledby="site-title">
-    <div class="backdrop" aria-hidden="true">
-      <!-- SVG morphing blobs -->
-      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;z-index:0">
+  <div class="bg-wrap" aria-hidden="true">
+    <div class="flow"></div>
+
+    <!-- SVG blobs: morph slowly using SMIL; long durations to be smooth and low-CPU -->
+    <div class="blob-layer">
+      <svg class="blob-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient id="gg1" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed" stop-opacity="0.22"/><stop offset="1" stop-color="#5eead4" stop-opacity="0.08"/></linearGradient>
-          <linearGradient id="gg2" x1="0" x2="1"><stop offset="0" stop-color="#a78bfa" stop-opacity="0.14"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0.06"/></linearGradient>
-          <filter id="soft"><feGaussianBlur stdDeviation="36"/></filter>
+          <linearGradient id="gA" x1="0" x2="1">
+            <stop offset="0" stop-color="#7c3aed" stop-opacity="0.12"/>
+            <stop offset="1" stop-color="#5eead4" stop-opacity="0.05"/>
+          </linearGradient>
+          <linearGradient id="gB" x1="0" x2="1">
+            <stop offset="0" stop-color="#a78bfa" stop-opacity="0.10"/>
+            <stop offset="1" stop-color="#7c3aed" stop-opacity="0.04"/>
+          </linearGradient>
+          <filter id="softBlur">
+            <feGaussianBlur stdDeviation="36" />
+          </filter>
         </defs>
 
-        <g style="filter:url(#soft)">
-          <path id="bA" fill="url(#gg1)" d="M220,120 C100,90 120,220 190,270 C260,320 380,310 430,260 C480,210 420,80 340,80 C260,80 220,150 220,120Z">
-            <animate attributeName="d" dur="14s" repeatCount="indefinite"
-             values="M220,120 C100,90 120,220 190,270 C260,320 380,310 430,260 C480,210 420,80 340,80 C260,80 220,150 220,120Z;
-                     M250,120 C120,60 100,220 180,270 C260,320 420,300 470,250 C520,200 460,120 380,140 C300,160 260,140 250,120Z;
-                     M220,120 C100,90 120,220 190,270 C260,320 380,310 430,260 C480,210 420,80 340,80 C260,80 220,150 220,120Z"/>
+        <g filter="url(#softBlur)">
+          <path fill="url(#gA)">
+            <animate attributeName="d" dur="30s" repeatCount="indefinite"
+              values="
+                M220,120 C100,90 120,220 190,270 C260,320 380,310 430,260 C480,210 420,80 340,80 C260,80 220,150 220,120Z;
+                M260,140 C140,60 120,240 200,300 C280,360 420,320 460,270 C500,220 460,120 380,100 C300,80 280,140 260,140Z;
+                M220,120 C100,90 120,220 190,270 C260,320 380,310 430,260 C480,210 420,80 340,80 C260,80 220,150 220,120Z"/>
           </path>
-          <path id="bB" fill="url(#gg2)" d="M1200,700 C1080,660 1040,760 1120,820 C1200,880 1320,840 1360,760 C1400,680 1320,620 1240,640 C1160,660 1220,720 1200,700Z">
-            <animate attributeName="d" dur="18s" repeatCount="indefinite"
-             values="M1200,700 C1080,660 1040,760 1120,820 C1200,880 1320,840 1360,760 C1400,680 1320,620 1240,640 C1160,660 1220,720 1200,700Z;
-                     M1180,700 C1060,640 1060,760 1140,820 C1220,880 1340,820 1380,760 C1420,700 1340,660 1260,640 C1180,620 1200,700 1180,700Z;
-                     M1200,700 C1080,660 1040,760 1120,820 C1200,880 1320,840 1360,760 C1400,680 1320,620 1240,640 C1160,660 1220,720 1200,700Z"/>
-          </path>
-        </g>
 
-        <g style="filter:url(#soft)">
-          <circle cx="900" cy="160" r="76" fill="#7c3aed" opacity="0.07">
-            <animate attributeName="cy" dur="9s" values="160;120;180;160" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="420" cy="520" r="58" fill="#a78bfa" opacity="0.06">
-            <animate attributeName="cx" dur="11s" values="420;380;460;420" repeatCount="indefinite"/>
-          </circle>
+          <path fill="url(#gB)">
+            <animate attributeName="d" dur="36s" repeatCount="indefinite"
+              values="
+                M1200,700 C1080,660 1040,760 1120,820 C1200,880 1320,840 1360,760 C1400,680 1320,620 1240,640 C1160,660 1220,720 1200,700Z;
+                M1180,660 C1060,620 1060,760 1140,800 C1220,840 1340,780 1380,720 C1420,660 1340,640 1260,640 C1180,640 1200,660 1180,660Z;
+                M1200,700 C1080,660 1040,760 1120,820 C1200,880 1320,840 1360,760 C1400,680 1320,620 1240,640 C1160,660 1220,720 1200,700Z"/>
+          </path>
         </g>
       </svg>
-
-      <!-- PARTICLE CANVAS (full richness everywhere) -->
-      <canvas class="particle-canvas" style="position:absolute;inset:0;z-index:2"></canvas>
-
-      <div class="vignette"></div>
     </div>
 
-    <div class="card" role="region" aria-label="SleekShift coming soon">
-      <div class="left">
-        <div class="brand reveal delay-1">
-          <!-- Use SVG if available; fallback to SSLogo.jpeg if it fails to load.
-               If your SVG has a different name, either rename it to SSLogo.svg or update the src below. -->
-          <img src="SSLogo.svg" alt="SleekShift logo" srcset="SSLogo@2x.svg 2x, SSLogo@2x.jpeg 2x" style="width:64px;height:64px;object-fit:contain;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 12px 40px rgba(124,58,237,0.12);"
-               onerror="(function(i){i.onerror=null; i.src='SSLogo.jpeg'; console.warn('SSLogo.svg not found — falling back to SSLogo.jpeg');})(this)">
-          <div>
-            <h2 id="site-title">SleekShift</h2>
-            <small class="muted">Product-first D2C launches</small>
-          </div>
-        </div>
-
-        <h1 class="reveal delay-2">We’re building something useful.</h1>
-        <p class="lead reveal delay-3">Launching soon. Production-ready dielines, conversion-first shops, supplier-ready sourcing — one accountable UK team.</p>
-
-        <div class="ctas reveal delay-3" role="group" aria-label="Primary actions">
-          <a class="btn" href="mailto:contact@sleekshift.co.uk" title="Email SleekShift">Contact us</a>
-          <button class="btn-ghost" type="button" onclick="alert('Email us at contact@sleekshift.co.uk')">More info</button>
-        </div>
-
-        <div class="contact-row reveal delay-3">
-          <div class="mailbox" role="link" aria-label="email contact">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 8.6L12 13l9-4.4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-            <a href="mailto:contact@sleekshift.co.uk">contact@sleekshift.co.uk</a>
-          </div>
-          <small class="muted" style="margin-left:8px">We reply within 48 hours.</small>
-        </div>
-      </div>
-
-      <aside class="right reveal delay-1" aria-hidden="false">
-        <h3>One accountable UK team</h3>
-        <p>Production-ready dielines • Conversion-first shops • Supplier-ready sourcing. Send a single email and we’ll return a one-page Launch Plan.</p>
-        <div style="margin-top:12px"><span class="badge">2–6 week launches</span></div>
-
-        <svg class="foreground" viewBox="0 0 320 320" aria-hidden="true">
-          <defs><linearGradient id="fg1" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed" stop-opacity="0.95"/><stop offset="1" stop-color="#5eead4" stop-opacity="0.55"/></linearGradient><filter id="fgBlur"><feGaussianBlur stdDeviation="18"/></filter></defs>
-          <g filter="url(#fgBlur)"><path d="M40,140 C30,90 80,20 140,30 C200,40 260,90 240,140 C220,190 160,240 110,220 C60,200 50,180 40,140Z" fill="url(#fg1)"><animateTransform attributeName="transform" attributeType="XML" type="translate" dur="8s" values="0 0; 6 -8; 0 0" repeatCount="indefinite"/></path></g>
-        </svg>
-      </aside>
-    </div>
+    <div class="vignette"></div>
   </div>
 
-<script>
-/* ============================
-   FULL-RICH PARTICLE CANVAS (interactive)
-   - intentional: full richness on all devices
-   - responds to mouse / touch
-   - caps DPR to 2 and particle count to avoid catastrophic overload
-   ============================ */
+  <main class="page" role="main" aria-labelledby="site-title">
+    <div class="container">
+      <header>
+        <div class="logo" aria-hidden="false">
+          <!-- prefer SVG; fallback to jpg if missing -->
+          <img src="SSLogo.svg" alt="SleekShift logo"
+               onerror="this.onerror=null;this.src='SSLogo.jpeg';console.warn('SSLogo.svg missing — falling back to SSLogo.jpeg')">
+          <div class="brand">SleekShift</div>
+        </div>
+      </header>
 
-(function(){
-  const canvas = document.querySelector('.particle-canvas');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
+      <section class="hero" aria-labelledby="site-title">
+        <h1 id="site-title">We’re building something useful.</h1>
+        <p class="sub">Launching soon.</p>
 
-  let DPR = Math.min(window.devicePixelRatio || 1, 2);
-  let W = 0, H = 0;
-  let particles = [];
-  let mouse = {x:-9999,y:-9999};
-  let tick = 0;
+        <div class="cta">
+          <a class="btn" href="mailto:contact@sleekshift.co.uk" title="Email SleekShift">Contact us</a>
+        </div>
 
-  function resize(){
-    W = canvas.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) * DPR;
-    H = canvas.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0) * DPR;
-    canvas.style.width = (W/DPR) + 'px';
-    canvas.style.height = (H/DPR) + 'px';
-    initParticles();
-  }
+        <div class="mail" aria-hidden="true">contact@sleekshift.co.uk</div>
+      </section>
 
-  function initParticles(){
-    particles = [];
-    // heavier counts for richer experience (but clamped)
-    const baseCount = Math.round((W/DPR) * 0.035);
-    const count = Math.min(800, Math.max(40, baseCount)); // clamp 40..800
-    for(let i=0;i<count;i++){
-      particles.push({
-        x: Math.random()*W,
-        y: Math.random()*H,
-        r: (6 + Math.random()*28) * DPR,
-        vx: (Math.random()-0.5) * (0.25 + Math.random()*1.1) * DPR,
-        vy: (Math.random()-0.5) * (0.18 + Math.random()*0.9) * DPR,
-        alpha: 0.04 + Math.random()*0.18,
-        hue: 240 + Math.random()*110,
-        phase: Math.random()*Math.PI*2
-      });
-    }
-  }
+      <footer aria-hidden="true">
+        <!-- intentionally minimal -->
+      </footer>
+    </div>
+  </main>
 
-  function step(){
-    ctx.clearRect(0,0,W,H);
-    tick++;
-    for(const p of particles){
-      p.x += p.vx + Math.sin((tick + p.phase) * 0.002) * 0.25 * DPR;
-      p.y += p.vy + Math.cos((tick + p.phase) * 0.002) * 0.22 * DPR;
-
-      if(p.x < -p.r) p.x = W + p.r;
-      if(p.x > W + p.r) p.x = -p.r;
-      if(p.y < -p.r) p.y = H + p.r;
-      if(p.y > H + p.r) p.y = -p.r;
-
-      const dx = p.x - mouse.x;
-      const dy = p.y - mouse.y;
-      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-      if(dist < 220 * DPR){
-        const force = (1 - (dist / (220 * DPR))) * 1.2;
-        p.x += (dx / dist) * force * 12 * DPR;
-        p.y += (dy / dist) * force * 9 * DPR;
-      }
-
-      const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
-      grd.addColorStop(0, 'hsla(' + p.hue + ', 82%, 65%, ' + (p.alpha * 1.0) + ')');
-      grd.addColorStop(1, 'hsla(' + (p.hue+35) + ', 82%, 60%, 0)');
-      ctx.beginPath();
-      ctx.fillStyle = grd;
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-      ctx.fill();
-    }
-
-    if(particles.length < 1000){
-      ctx.beginPath();
-      for(let i=0;i<particles.length;i+=3){
-        const a = particles[i];
-        if(!a) continue;
-        for(let j=i+1;j<i+5 && j<particles.length;j++){
-          const b = particles[j];
-          const dd = (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
-          if(dd < 18000 * DPR){
-            ctx.moveTo(a.x,a.y);
-            ctx.lineTo(b.x,b.y);
-          }
-        }
-      }
-      ctx.strokeStyle = 'rgba(124,58,237,0.02)';
-      ctx.lineWidth = 1 * DPR;
-      ctx.stroke();
-    }
-
-    requestAnimationFrame(step);
-  }
-
-  function onMove(e){
-    const rect = canvas.getBoundingClientRect();
-    const x = ((e.clientX || (e.touches && e.touches[0].clientX)) - rect.left) * DPR;
-    const y = ((e.clientY || (e.touches && e.touches[0].clientY)) - rect.top) * DPR;
-    mouse.x = x; mouse.y = y;
-  }
-  window.addEventListener('mousemove', onMove, {passive:true});
-  window.addEventListener('touchmove', onMove, {passive:true});
-  window.addEventListener('touchstart', onMove, {passive:true});
-  window.addEventListener('mouseleave', ()=>{ mouse.x = -9999; mouse.y = -9999; }, {passive:true});
-
-  resize();
-  window.addEventListener('resize', ()=>{ clearTimeout(window.__ssr); window.__ssr = setTimeout(resize, 180); }, {passive:true});
-  requestAnimationFrame(step);
-
-  document.addEventListener('visibilitychange', function(){
-    if(document.hidden){ mouse.x = -9999; mouse.y = -9999; }
-  });
-})();
-</script>
 </body>
 </html>
