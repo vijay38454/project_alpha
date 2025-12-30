@@ -3,142 +3,122 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SleekShift — Launching Soon</title>
+<title>SleekShift — Coming soon</title>
 <meta name="description" content="SleekShift — We’re building something useful. Contact: contact@sleekshift.co.uk" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f8f6f2;
+    --bg: #f8f6f2;
     --card: #ffffff;
     --text: #0b1220;
     --muted: #6b7280;
-    --accent1: #7c3aed;
-    --accent2: #a78bfa;
+    --accent1: #7c3aed; /* purple */
+    --accent2: #a78bfa; /* lilac */
     --maxw: 1100px;
+    --pad: 48px;
   }
   *{box-sizing:border-box}
   html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
   a{color:inherit;text-decoration:none}
-  /* layout */
-  .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px 20px;position:relative;overflow:hidden}
-  .container{width:100%;max-width:var(--maxw);display:flex;flex-direction:column;gap:28px;align-items:center;z-index:5;position:relative}
-  header{display:flex;align-items:center;gap:14px;width:100%;justify-content:flex-start}
-  .logo{display:flex;align-items:center;gap:12px}
-  .logo img{width:64px;height:64px;object-fit:contain;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 12px 36px rgba(124,58,237,0.10)}
-  .brand{font-weight:800;font-size:18px}
-  /* hero */
-  .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:40px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.95));box-shadow:0 18px 46px rgba(11,18,32,0.06);border:1px solid rgba(11,18,32,0.03);min-width:320px}
-  h1{font-size:40px;margin:8px 0 12px;line-height:1.02}
-  p.sub{margin:0;color:var(--muted);font-size:16px}
-  .cta{margin-top:18px;display:flex;gap:12px;align-items:center}
-  .btn{padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;font-weight:700;box-shadow:0 16px 36px rgba(124,58,237,0.12)}
-  .mail{margin-top:12px;color:var(--muted);font-size:14px}
-  /* footer small */
-  footer{margin-top:10px;color:var(--muted);font-size:13px}
+
+  /* PAGE LAYOUT */
+  .page{min-height:100vh;position:relative;overflow:hidden}
+  /* animated background layer behind everything */
+  .bg {
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background: radial-gradient(circle at 10% 20%, rgba(124,58,237,0.06) 0px, rgba(124,58,237,0.03) 160px, transparent 420px),
+                radial-gradient(circle at 90% 80%, rgba(167,139,250,0.04) 0px, rgba(167,139,250,0.02) 160px, transparent 420px);
+    /* subtle moving overlay */
+    background-size: 120% 120%;
+    animation: bg-pan 22s linear infinite;
+    filter: saturate(1.02);
+  }
+  @keyframes bg-pan{ 0%{transform:translate3d(0,0,0)} 50%{transform:translate3d(-6px,-6px,0)} 100%{transform:translate3d(0,0,0)} }
+
+  /* soft flowing gradient overlay using pseudo-elements */
+  .bg::before, .bg::after {
+    content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background: radial-gradient(600px 600px at 10% 12%, rgba(124,58,237,0.06), transparent 18%),
+                radial-gradient(500px 500px at 85% 82%, rgba(167,139,250,0.04), transparent 24%);
+    mix-blend-mode:screen; opacity:0.95; filter: blur(32px);
+  }
+  .bg::after { animation: shift 30s ease-in-out infinite; transform-origin:center; }
+  @keyframes shift { 0%{transform:translate3d(0,0,0)}50%{transform:translate3d(12px,8px,0)}100%{transform:translate3d(0,0,0)} }
+
+  /* header top-left with logo */
+  header.site-header {
+    position:fixed; left:var(--pad); top:var(--pad); z-index:11; display:flex; align-items:center; gap:12px;
+    background:transparent;
+  }
+  header .logo { display:flex; gap:12px; align-items:center; }
+  header .logo img {
+    width:64px; height:64px; object-fit:contain; border-radius:12px;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
+    box-shadow: 0 12px 32px rgba(124,58,237,0.12);
+    display:block;
+  }
+  header .brand { font-weight:800; font-size:18px; color:var(--text); margin-left:2px; }
+
+  /* center container for the hero */
+  .center {
+    position:relative; z-index:10; min-height:100vh; display:flex; align-items:center; justify-content:center; padding: calc(var(--pad) * 0.5);
+  }
+  .hero {
+    width:100%; max-width:920px; margin:0 auto; text-align:center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.98));
+    border-radius:16px; padding:48px 48px; box-shadow: 0 30px 80px rgba(11,18,32,0.06); border:1px solid rgba(11,18,32,0.03);
+  }
+  h1 { font-size:48px; margin:0 0 12px; line-height:1.02; font-weight:800 }
+  p.lead { margin:0 0 18px; color:var(--muted); font-size:16px }
+
+  .cta { margin-top:8px; display:flex; flex-direction:column; align-items:center; gap:12px }
+  .btn {
+    display:inline-block; padding:12px 20px; border-radius:12px; font-weight:700; color:white;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    box-shadow: 0 20px 48px rgba(124,58,237,0.12);
+  }
+  .contact-line { margin-top:8px; color:var(--muted); font-size:14px }
+
   /* responsive */
-  @media (max-width:720px){ h1{font-size:28px} .logo img{width:52px;height:52px} .hero{padding:28px} }
-
-  /* BACKGROUND: constant flowing gradient + slow morphing SVG blobs (no mouse interaction) */
-  .bg-wrap{position:fixed;inset:0;z-index:0;pointer-events:none}
-  .flow {
-    position:absolute;inset:0;
-    background: linear-gradient(120deg,#f8f6f2 0%, #fbf9f7 40%, #fff 100%);
-    /* subtle moving gradient overlay */
-    background-size: 300% 300%;
-    animation: bgFlow 18s linear infinite;
-    opacity:1;
-    mix-blend-mode:normal;
-  }
-  @keyframes bgFlow{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+  @media (max-width:880px){
+    header.site-header { left:20px; top:20px; }
+    header .logo img { width:52px; height:52px; }
+    h1 { font-size:30px }
+    .hero { padding:28px; border-radius:12px; }
   }
 
-  /* SVG blob layer */
-  .blob-layer{position:absolute;inset:0}
-  .blob-svg{width:100%;height:100%;display:block}
-  /* subtle overlay vignette to lift content */
-  .vignette{position:absolute;inset:0;background:radial-gradient(60% 60% at 10% 10%, rgba(124,58,237,0.04), rgba(255,255,255,0) 25%), radial-gradient(50% 40% at 90% 80%, rgba(167,139,250,0.03), transparent 30%);mix-blend-mode:normal;opacity:1}
-  
-  /* reduce-motion: stop animations for users who prefer less motion */
+  /* accessibility: respect reduced motion */
   @media (prefers-reduced-motion: reduce){
-    .flow{animation: none !important}
-    .blob-svg path, .blob-svg animate { animation: none !important }
+    .bg, .bg::after, .bg::before { animation: none !important; transform:none !important; filter:none !important }
   }
 </style>
 </head>
 <body>
-  <div class="bg-wrap" aria-hidden="true">
-    <div class="flow"></div>
+  <div class="page">
+    <!-- BACKGROUND -->
+    <div class="bg" aria-hidden="true"></div>
 
-    <!-- SVG blobs: morph slowly using SMIL; long durations to be smooth and low-CPU -->
-    <div class="blob-layer">
-      <svg class="blob-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="gA" x1="0" x2="1">
-            <stop offset="0" stop-color="#7c3aed" stop-opacity="0.12"/>
-            <stop offset="1" stop-color="#5eead4" stop-opacity="0.05"/>
-          </linearGradient>
-          <linearGradient id="gB" x1="0" x2="1">
-            <stop offset="0" stop-color="#a78bfa" stop-opacity="0.10"/>
-            <stop offset="1" stop-color="#7c3aed" stop-opacity="0.04"/>
-          </linearGradient>
-          <filter id="softBlur">
-            <feGaussianBlur stdDeviation="36" />
-          </filter>
-        </defs>
+    <!-- HEADER (logo + brand top-left) -->
+    <header class="site-header" role="banner" aria-label="SleekShift">
+      <div class="logo" aria-hidden="false">
+        <img src="SSLogo.svg" alt="SleekShift logo"
+             onerror="this.onerror=null;this.src='SSLogo.jpeg'; console.warn('SSLogo.svg missing — falling back to SSLogo.jpeg')">
+        <div class="brand">SleekShift</div>
+      </div>
+    </header>
 
-        <g filter="url(#softBlur)">
-          <path fill="url(#gA)">
-            <animate attributeName="d" dur="30s" repeatCount="indefinite"
-              values="
-                M220,120 C100,90 120,220 190,270 C260,320 380,310 430,260 C480,210 420,80 340,80 C260,80 220,150 220,120Z;
-                M260,140 C140,60 120,240 200,300 C280,360 420,320 460,270 C500,220 460,120 380,100 C300,80 280,140 260,140Z;
-                M220,120 C100,90 120,220 190,270 C260,320 380,310 430,260 C480,210 420,80 340,80 C260,80 220,150 220,120Z"/>
-          </path>
-
-          <path fill="url(#gB)">
-            <animate attributeName="d" dur="36s" repeatCount="indefinite"
-              values="
-                M1200,700 C1080,660 1040,760 1120,820 C1200,880 1320,840 1360,760 C1400,680 1320,620 1240,640 C1160,660 1220,720 1200,700Z;
-                M1180,660 C1060,620 1060,760 1140,800 C1220,840 1340,780 1380,720 C1420,660 1340,640 1260,640 C1180,640 1200,660 1180,660Z;
-                M1200,700 C1080,660 1040,760 1120,820 C1200,880 1320,840 1360,760 C1400,680 1320,620 1240,640 C1160,660 1220,720 1200,700Z"/>
-          </path>
-        </g>
-      </svg>
-    </div>
-
-    <div class="vignette"></div>
-  </div>
-
-  <main class="page" role="main" aria-labelledby="site-title">
-    <div class="container">
-      <header>
-        <div class="logo" aria-hidden="false">
-          <!-- prefer SVG; fallback to jpg if missing -->
-          <img src="SSLogo.svg" alt="SleekShift logo"
-               onerror="this.onerror=null;this.src='SSLogo.jpeg';console.warn('SSLogo.svg missing — falling back to SSLogo.jpeg')">
-          <div class="brand">SleekShift</div>
-        </div>
-      </header>
-
+    <!-- CENTER HERO -->
+    <main class="center" role="main" aria-labelledby="site-title">
       <section class="hero" aria-labelledby="site-title">
         <h1 id="site-title">We’re building something useful.</h1>
-        <p class="sub">Launching soon.</p>
+        <p class="lead">Launching soon.</p>
 
-        <div class="cta">
+        <div class="cta" role="group" aria-label="Contact">
           <a class="btn" href="mailto:contact@sleekshift.co.uk" title="Email SleekShift">Contact us</a>
+          <div class="contact-line">contact@sleekshift.co.uk</div>
         </div>
-
-        <div class="mail" aria-hidden="true">contact@sleekshift.co.uk</div>
       </section>
-
-      <footer aria-hidden="true">
-        <!-- intentionally minimal -->
-      </footer>
-    </div>
-  </main>
-
+    </main>
+  </div>
 </body>
 </html>
