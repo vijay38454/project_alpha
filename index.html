@@ -14,6 +14,7 @@
     --text: #0f172a;
     --muted: #64748b;
     --brand-purple: #7c3aed;
+    --brand-light-purple: #a78bfa;
     --card-bg: rgba(255, 255, 255, 0.65);
     --card-border: rgba(255, 255, 255, 0.9);
   }
@@ -59,13 +60,22 @@
     100% { transform: translateY(110vh) translateX(-10px); opacity: 0; }
   }
 
-  /* Generating variations */
+  /* Generating variations - Increased count to 12 */
   .flake:nth-child(1) { left: 10%; width: 20px; height: 20px; animation-duration: 14s; animation-delay: 0s; }
-  .flake:nth-child(2) { left: 25%; width: 15px; height: 15px; animation-duration: 18s; animation-delay: 2s; background: #a78bfa; filter: blur(5px); }
+  .flake:nth-child(2) { left: 25%; width: 15px; height: 15px; animation-duration: 18s; animation-delay: 2s; background: var(--brand-light-purple); filter: blur(5px); }
   .flake:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-duration: 20s; animation-delay: 1s; opacity: 0.3; }
   .flake:nth-child(4) { left: 55%; width: 10px; height: 10px; animation-duration: 12s; animation-delay: 5s; }
   .flake:nth-child(5) { left: 75%; width: 30px; height: 30px; animation-duration: 16s; animation-delay: 0.5s; filter: blur(12px); }
   .flake:nth-child(6) { left: 85%; width: 18px; height: 18px; animation-duration: 13s; animation-delay: 3s; background: #ddd6fe; }
+  
+  /* New flakes for denser feel */
+  .flake:nth-child(7) { left: 5%; width: 12px; height: 12px; animation-duration: 11s; animation-delay: 1.5s; opacity: 0.4; }
+  .flake:nth-child(8) { left: 33%; width: 22px; height: 22px; animation-duration: 19s; animation-delay: 4s; background: var(--brand-light-purple); }
+  .flake:nth-child(9) { left: 60%; width: 28px; height: 28px; animation-duration: 15s; animation-delay: 2.5s; filter: blur(10px); }
+  .flake:nth-child(10) { left: 92%; width: 14px; height: 14px; animation-duration: 17s; animation-delay: 0.2s; }
+  .flake:nth-child(11) { left: 20%; width: 16px; height: 16px; animation-duration: 13s; animation-delay: 3.5s; opacity: 0.35; }
+  .flake:nth-child(12) { left: 48%; width: 24px; height: 24px; animation-duration: 21s; animation-delay: 1s; background: #ddd6fe; filter: blur(6px); }
+
 
   /* --- LAYOUT --- */
   .page-wrapper {
@@ -79,23 +89,21 @@
     padding: 20px;
   }
 
-  /* --- HEADER (Now Centered) --- */
+  /* --- HEADER (Centered & Larger) --- */
   header.site-header {
-    margin-bottom: 32px; /* Space between logo and card */
+    margin-bottom: 40px; /* Increased space */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 16px; /* Increased gap */
   }
 
-  /* Logo container cleaned up - No purple tint */
   .logo-container {
-    width: 40px; 
-    height: 40px;
+    width: 64px; /* Increased size */
+    height: 64px; /* Increased size */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Removed background-color/gradient to fix tint issue */
   }
 
   .logo-container img {
@@ -103,12 +111,11 @@
     height: 100%;
     object-fit: contain;
     display: block;
-    /* If your SVG is black, it will show black. If transparent, it works perfectly. */
   }
   
   .brand-name {
-    font-weight: 700;
-    font-size: 20px; /* Slightly larger for center stage */
+    font-weight: 800; /* Made bolder */
+    font-size: 32px; /* Increased font size */
     color: var(--text);
     letter-spacing: -0.03em;
   }
@@ -116,17 +123,17 @@
   /* --- GLASS CARD --- */
   .glass-card {
     width: 100%;
-    max-width: 540px;
+    max-width: 580px; /* Slightly wider card */
     text-align: center;
     background: var(--card-bg);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--card-border);
     border-radius: 24px;
-    padding: 60px 48px;
+    padding: 64px 48px;
     box-shadow: 
       0 4px 6px -1px rgba(0, 0, 0, 0.01), 
-      0 20px 40px -12px rgba(124, 58, 237, 0.08); /* Soft purple shadow glow */
+      0 20px 40px -12px rgba(124, 58, 237, 0.08);
   }
 
   h1 {
@@ -141,9 +148,10 @@
   p.lead {
     margin: 0 auto 32px;
     color: var(--muted);
-    font-size: 17px;
+    font-size: 18px; /* Slightly larger font */
     font-weight: 400;
     line-height: 1.5;
+    max-width: 460px; /* Ensure new joke text fits well */
   }
 
   .cta-group {
@@ -157,11 +165,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 48px;
-    padding: 0 32px;
+    height: 52px; /* Slightly taller button */
+    padding: 0 36px;
     border-radius: 99px;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
     color: white;
     background: #0f172a;
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
@@ -175,7 +183,7 @@
   }
 
   .email-link {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--muted);
     opacity: 0.7;
   }
@@ -184,6 +192,8 @@
   /* --- RESPONSIVE --- */
   @media (max-width: 600px) {
     h1 { font-size: 32px; }
+    .brand-name { font-size: 24px; }
+    .logo-container { width: 48px; height: 48px; }
     .glass-card { padding: 40px 24px; }
   }
 </style>
@@ -193,6 +203,12 @@
   <div class="bg-layer"></div>
 
   <div class="snow-container" aria-hidden="true">
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
     <div class="flake"></div>
     <div class="flake"></div>
     <div class="flake"></div>
@@ -210,9 +226,7 @@
       <div class="brand-name">SleekShift</div>
     </header>
 
-    <section class="glass-card">
-      <h1>We’re building<br>something useful.</h1>
-      <p class="lead">Crafting the future of tools.<br>Join us for the launch.</p>
+<p class="lead">SleekShift is the growth upgrade your store deserves,<br>not another “strategy doc.”</p>
 
       <div class="cta-group">
         <a class="btn" href="mailto:contact@sleekshift.co.uk">Get in touch</a>
