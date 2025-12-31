@@ -37,17 +37,17 @@
     background: radial-gradient(circle at 50% -20%, rgba(240,235,255,0.9) 0%, rgba(255,255,255,0) 70%);
   }
 
-  /* --- SOFT BLURRY SNOWFLAKES ONLY --- */
+  /* --- SOFT BLURRY SNOWFLAKES --- */
   .snow-container {
     position: fixed; inset: 0; z-index: 1; pointer-events: none;
   }
   
   .flake {
     position: absolute;
-    top: -20%; /* Start well above screen */
+    top: -20%;
     background: var(--brand-purple);
-    border-radius: 50%; /* STRICTLY CIRCLES */
-    filter: blur(8px);  /* STRICTLY BLURRED */
+    border-radius: 50%;
+    filter: blur(8px);
     animation: fall linear infinite;
     opacity: 0;
   }
@@ -59,17 +59,16 @@
     100% { transform: translateY(120vh) translateX(-20px); opacity: 0; }
   }
 
-  /* --- GENERATING VARIATIONS (50 Particles) --- */
-  /* By using nth-child(Xn + Y), we create randomness without repeating code 50 times */
-
-  /* 1. Size & Blur Variations */
+  /* --- CONFIGURATION --- */
+  
+  /* 1. Variations in Look */
   .flake:nth-child(5n+1) { width: 20px; height: 20px; filter: blur(8px); }
   .flake:nth-child(5n+2) { width: 12px; height: 12px; filter: blur(5px); opacity: 0.4; }
   .flake:nth-child(5n+3) { width: 32px; height: 32px; filter: blur(14px); opacity: 0.2; }
   .flake:nth-child(5n+4) { width: 16px; height: 16px; filter: blur(6px); background: var(--brand-light); }
   .flake:nth-child(5n+5) { width: 24px; height: 24px; filter: blur(10px); background: #ddd6fe; }
 
-  /* 2. Duration Variations */
+  /* 2. Variations in Speed */
   .flake:nth-child(7n+1) { animation-duration: 12s; }
   .flake:nth-child(7n+2) { animation-duration: 18s; }
   .flake:nth-child(7n+3) { animation-duration: 14s; }
@@ -78,63 +77,65 @@
   .flake:nth-child(7n+6) { animation-duration: 25s; }
   .flake:nth-child(7n+7) { animation-duration: 10s; }
 
-  /* 3. Horizontal Position & Delay Variations (Manual Spreading) */
-  .flake:nth-child(1) { left: 2%; animation-delay: 0s; }
-  .flake:nth-child(2) { left: 5%; animation-delay: 4s; }
-  .flake:nth-child(3) { left: 8%; animation-delay: 2s; }
-  .flake:nth-child(4) { left: 12%; animation-delay: 6s; }
-  .flake:nth-child(5) { left: 15%; animation-delay: 1s; }
-  .flake:nth-child(6) { left: 18%; animation-delay: 8s; }
-  .flake:nth-child(7) { left: 22%; animation-delay: 3s; }
-  .flake:nth-child(8) { left: 25%; animation-delay: 5s; }
-  .flake:nth-child(9) { left: 28%; animation-delay: 0.5s; }
-  .flake:nth-child(10) { left: 32%; animation-delay: 7s; }
+  /* 3. POSITIONS & NEGATIVE DELAYS (The Fix) */
+  /* Using negative delays ensures flakes are already mid-fall on load */
   
-  .flake:nth-child(11) { left: 35%; animation-delay: 2.5s; }
-  .flake:nth-child(12) { left: 38%; animation-delay: 5.5s; }
-  .flake:nth-child(13) { left: 42%; animation-delay: 1.5s; }
-  .flake:nth-child(14) { left: 45%; animation-delay: 8.5s; }
-  .flake:nth-child(15) { left: 48%; animation-delay: 3.5s; }
-  .flake:nth-child(16) { left: 52%; animation-delay: 6.5s; }
-  .flake:nth-child(17) { left: 55%; animation-delay: 0.2s; }
-  .flake:nth-child(18) { left: 58%; animation-delay: 4.2s; }
-  .flake:nth-child(19) { left: 62%; animation-delay: 2.2s; }
-  .flake:nth-child(20) { left: 65%; animation-delay: 7.2s; }
+  .flake:nth-child(1) { left: 2%; animation-delay: -1s; }
+  .flake:nth-child(2) { left: 5%; animation-delay: -14s; }
+  .flake:nth-child(3) { left: 8%; animation-delay: -22s; }
+  .flake:nth-child(4) { left: 12%; animation-delay: -6s; }
+  .flake:nth-child(5) { left: 15%; animation-delay: -11s; }
+  .flake:nth-child(6) { left: 18%; animation-delay: -18s; }
+  .flake:nth-child(7) { left: 22%; animation-delay: -3s; }
+  .flake:nth-child(8) { left: 25%; animation-delay: -25s; }
+  .flake:nth-child(9) { left: 28%; animation-delay: -10s; }
+  .flake:nth-child(10) { left: 32%; animation-delay: -17s; }
+  
+  .flake:nth-child(11) { left: 35%; animation-delay: -2.5s; }
+  .flake:nth-child(12) { left: 38%; animation-delay: -15.5s; }
+  .flake:nth-child(13) { left: 42%; animation-delay: -21.5s; }
+  .flake:nth-child(14) { left: 45%; animation-delay: -8.5s; }
+  .flake:nth-child(15) { left: 48%; animation-delay: -13.5s; }
+  .flake:nth-child(16) { left: 52%; animation-delay: -6.5s; }
+  .flake:nth-child(17) { left: 55%; animation-delay: -19.2s; }
+  .flake:nth-child(18) { left: 58%; animation-delay: -4.2s; }
+  .flake:nth-child(19) { left: 62%; animation-delay: -22.2s; }
+  .flake:nth-child(20) { left: 65%; animation-delay: -7.2s; }
 
-  .flake:nth-child(21) { left: 68%; animation-delay: 1.2s; }
-  .flake:nth-child(22) { left: 72%; animation-delay: 5.2s; }
-  .flake:nth-child(23) { left: 75%; animation-delay: 3.2s; }
-  .flake:nth-child(24) { left: 78%; animation-delay: 8.2s; }
-  .flake:nth-child(25) { left: 82%; animation-delay: 0.8s; }
-  .flake:nth-child(26) { left: 85%; animation-delay: 4.8s; }
-  .flake:nth-child(27) { left: 88%; animation-delay: 2.8s; }
-  .flake:nth-child(28) { left: 92%; animation-delay: 6.8s; }
-  .flake:nth-child(29) { left: 95%; animation-delay: 1.8s; }
-  .flake:nth-child(30) { left: 98%; animation-delay: 5.8s; }
+  .flake:nth-child(21) { left: 68%; animation-delay: -1.2s; }
+  .flake:nth-child(22) { left: 72%; animation-delay: -15.2s; }
+  .flake:nth-child(23) { left: 75%; animation-delay: -3.2s; }
+  .flake:nth-child(24) { left: 78%; animation-delay: -18.2s; }
+  .flake:nth-child(25) { left: 82%; animation-delay: -20.8s; }
+  .flake:nth-child(26) { left: 85%; animation-delay: -4.8s; }
+  .flake:nth-child(27) { left: 88%; animation-delay: -12.8s; }
+  .flake:nth-child(28) { left: 92%; animation-delay: -6.8s; }
+  .flake:nth-child(29) { left: 95%; animation-delay: -21.8s; }
+  .flake:nth-child(30) { left: 98%; animation-delay: -5.8s; }
 
   /* Extra Fillers */
-  .flake:nth-child(n+31) { opacity: 0.15; } /* Subtler background flakes */
-  .flake:nth-child(31) { left: 10%; animation-delay: 9s; }
-  .flake:nth-child(32) { left: 20%; animation-delay: 11s; }
-  .flake:nth-child(33) { left: 30%; animation-delay: 13s; }
-  .flake:nth-child(34) { left: 40%; animation-delay: 10s; }
-  .flake:nth-child(35) { left: 50%; animation-delay: 12s; }
-  .flake:nth-child(36) { left: 60%; animation-delay: 9.5s; }
-  .flake:nth-child(37) { left: 70%; animation-delay: 11.5s; }
-  .flake:nth-child(38) { left: 80%; animation-delay: 13.5s; }
-  .flake:nth-child(39) { left: 90%; animation-delay: 10.5s; }
-  .flake:nth-child(40) { left: 15%; animation-delay: 14s; }
+  .flake:nth-child(n+31) { opacity: 0.15; }
+  .flake:nth-child(31) { left: 10%; animation-delay: -9s; }
+  .flake:nth-child(32) { left: 20%; animation-delay: -11s; }
+  .flake:nth-child(33) { left: 30%; animation-delay: -13s; }
+  .flake:nth-child(34) { left: 40%; animation-delay: -10s; }
+  .flake:nth-child(35) { left: 50%; animation-delay: -12s; }
+  .flake:nth-child(36) { left: 60%; animation-delay: -19.5s; }
+  .flake:nth-child(37) { left: 70%; animation-delay: -21.5s; }
+  .flake:nth-child(38) { left: 80%; animation-delay: -23.5s; }
+  .flake:nth-child(39) { left: 90%; animation-delay: -10.5s; }
+  .flake:nth-child(40) { left: 15%; animation-delay: -14s; }
 
-  .flake:nth-child(41) { left: 25%; animation-delay: 0.3s; }
-  .flake:nth-child(42) { left: 35%; animation-delay: 2.3s; }
-  .flake:nth-child(43) { left: 45%; animation-delay: 4.3s; }
-  .flake:nth-child(44) { left: 55%; animation-delay: 6.3s; }
-  .flake:nth-child(45) { left: 65%; animation-delay: 8.3s; }
-  .flake:nth-child(46) { left: 75%; animation-delay: 1.3s; }
-  .flake:nth-child(47) { left: 85%; animation-delay: 3.3s; }
-  .flake:nth-child(48) { left: 95%; animation-delay: 5.3s; }
-  .flake:nth-child(49) { left: 5%; animation-delay: 7.3s; }
-  .flake:nth-child(50) { left: 50%; animation-delay: 9.3s; }
+  .flake:nth-child(41) { left: 25%; animation-delay: -0.3s; }
+  .flake:nth-child(42) { left: 35%; animation-delay: -22.3s; }
+  .flake:nth-child(43) { left: 45%; animation-delay: -4.3s; }
+  .flake:nth-child(44) { left: 55%; animation-delay: -16.3s; }
+  .flake:nth-child(45) { left: 65%; animation-delay: -8.3s; }
+  .flake:nth-child(46) { left: 75%; animation-delay: -11.3s; }
+  .flake:nth-child(47) { left: 85%; animation-delay: -3.3s; }
+  .flake:nth-child(48) { left: 95%; animation-delay: -15.3s; }
+  .flake:nth-child(49) { left: 5%; animation-delay: -7.3s; }
+  .flake:nth-child(50) { left: 50%; animation-delay: -19.3s; }
 
 
   /* --- LAYOUT --- */
@@ -151,34 +152,31 @@
   }
 
   /* --- HEADER --- */
-header.site-header {
-  display: inline-flex;
-  align-items: center;      /* best when logo > text */
-  justify-content: center;
-  gap: 10px;                /* your “bigger gap” */
-}
+  header.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px; 
+  }
 
-.logo-container {
-  width: auto;
-  height: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  transform: translateY(1px); /* tiny optical alignment fix */
-}
+  .logo-container {
+    width: 72px; 
+    height: 72px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   .logo-container img {
-  width: 48px;               /* slightly bigger than text */
-  height: 48px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     display: block;
   }
   
   .brand-name {
-    font-weight: 600; /* Spec: Inter Medium */
-    font-size: 42px;  /* Spec: Large */
-    line-height: 1;
+    font-weight: 500;
+    font-size: 42px; 
     color: var(--text);
     letter-spacing: -0.02em;
     line-height: 1;
@@ -260,14 +258,13 @@ header.site-header {
   .email-link:hover { opacity: 1; color: var(--brand-purple); }
 
   /* --- RESPONSIVE --- */
-@media (max-width: 600px) {
-  header.site-header { gap: 10px; }
-  .brand-name { font-size: 32px; }
-  .logo-container { width: 38px; height: 38px; transform: translateY(1px); }
-  h1 { font-size: 32px; }
-  p.lead { font-size: 17px; }
-  .glass-card { padding: 48px 24px; }
-}
+  @media (max-width: 600px) {
+    .brand-name { font-size: 32px; }
+    .logo-container { width: 56px; height: 56px; }
+    h1 { font-size: 32px; }
+    p.lead { font-size: 17px; }
+    .glass-card { padding: 48px 24px; }
+  }
 </style>
 </head>
 <body>
@@ -301,7 +298,7 @@ header.site-header {
     <section class="glass-card">
       <h1>We’re building<br>something useful.</h1>
       
-      <p class="lead">Your business deserves a growth upgrade, not another “strategy doc.”</p>
+      <p class="lead">SleekShift is the growth upgrade your store deserves, not another “strategy doc.”</p>
 
       <div class="cta-group">
         <a class="btn" href="mailto:contact@sleekshift.co.uk">Get in touch</a>
