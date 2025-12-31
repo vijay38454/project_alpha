@@ -156,31 +156,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 18px; 
+    gap: 10px; 
   }
 
-  .logo-container {
-    width: 72px; 
-    height: 72px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+ /* Keep logo slightly bigger than text + remove the big box effect */
+.logo-container {
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  margin-right: -6px;        /* cancels SVG built-in whitespace */
+  transform: translateY(1px); /* tiny optical alignment */
+}
 
-  .logo-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-  }
-  
-  .brand-name {
-    font-weight: 500;
-    font-size: 42px; 
-    color: var(--text);
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
+.logo-container img {
+  width: 48px;               /* slightly bigger than 42px text */
+  height: 48px;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-name {
+  font-weight: 500;          /* your preference */
+  font-size: 42px;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: 0.005em;   /* avoid Inter looking “stuck together” */
+  margin: 0;
+}
+
+.brand-name .ft-gap {
+  display: inline-block;
+  margin-left: 0.07em;       /* tweak range: 0.05em–0.10em */
+}
 
   /* --- GLASS CARD --- */
   .glass-card {
@@ -258,13 +268,17 @@
   .email-link:hover { opacity: 1; color: var(--brand-purple); }
 
   /* --- RESPONSIVE --- */
-  @media (max-width: 600px) {
-    .brand-name { font-size: 32px; }
-    .logo-container { width: 56px; height: 56px; }
-    h1 { font-size: 32px; }
-    p.lead { font-size: 17px; }
-    .glass-card { padding: 48px 24px; }
-  }
+@media (max-width: 600px) {
+  header.site-header { gap: 10px; }
+  .brand-name { font-size: 32px; }
+  .logo-container { margin-right: -5px; transform: translateY(1px); }
+  .logo-container img { width: 38px; height: 38px; }
+  .brand-name .ft-gap { margin-left: 0.07em; }
+
+  h1 { font-size: 32px; }
+  p.lead { font-size: 17px; }
+  .glass-card { padding: 48px 24px; }
+}
 </style>
 </head>
 <body>
@@ -292,7 +306,7 @@
       <div class="logo-container">
         <img src="SSLogo.svg" alt="Logo" onerror="this.style.display='none'"> 
       </div>
-      <div class="brand-name">SleekShift</div>
+  <div class="brand-name">SleekShif<span class="ft-gap">t</span></div>
     </header>
 
     <section class="glass-card">
