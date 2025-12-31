@@ -151,20 +151,22 @@
   }
 
   /* --- HEADER --- */
-  header.site-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px; 
-  }
+header.site-header {
+  display: inline-flex;
+  align-items: center;      /* best when logo > text */
+  justify-content: center;
+  gap: 16px;                /* your “bigger gap” */
+}
 
-  .logo-container {
-    width: 72px;  /* Spec: Large */
-    height: 72px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.logo-container {
+  width: 48px;              /* slightly bigger than text */
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  transform: translateY(1px); /* tiny optical alignment fix */
+}
 
   .logo-container img {
     width: 100%;
@@ -174,8 +176,9 @@
   }
   
   .brand-name {
-    font-weight: 500; /* Spec: Inter Medium */
+    font-weight: 600; /* Spec: Inter Medium */
     font-size: 42px;  /* Spec: Large */
+    line-height: 1;
     color: var(--text);
     letter-spacing: -0.02em;
     line-height: 1;
@@ -257,13 +260,14 @@
   .email-link:hover { opacity: 1; color: var(--brand-purple); }
 
   /* --- RESPONSIVE --- */
-  @media (max-width: 600px) {
-    .brand-name { font-size: 32px; }
-    .logo-container { width: 56px; height: 56px; }
-    h1 { font-size: 32px; }
-    p.lead { font-size: 17px; }
-    .glass-card { padding: 48px 24px; }
-  }
+@media (max-width: 600px) {
+  header.site-header { gap: 14px; }
+  .brand-name { font-size: 32px; }
+  .logo-container { width: 38px; height: 38px; transform: translateY(1px); }
+  h1 { font-size: 32px; }
+  p.lead { font-size: 17px; }
+  .glass-card { padding: 48px 24px; }
+}
 </style>
 </head>
 <body>
