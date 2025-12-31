@@ -151,45 +151,39 @@
     gap: 40px; 
   }
 
-  /* --- HEADER --- */
-  header.site-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; 
-  }
-
- /* Keep logo slightly bigger than text + remove the big box effect */
-.logo-container {
-  width: auto;
-  height: auto;
+/* --- HEADER --- */
+header.site-header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 auto;
-  margin-right: -6px;        /* cancels SVG built-in whitespace */
-  transform: translateY(1px); /* tiny optical alignment */
+  gap: 10px;                 /* tight */
 }
 
-.logo-container img {
-  width: 48px;               /* slightly bigger than 42px text */
-  height: 48px;
-  object-fit: contain;
+/* Make logo feel like part of the wordmark */
+.brand-logo {
+  width: 54px;               /* slightly bigger than 42px text */
+  height: 54px;
   display: block;
+  object-fit: contain;
+
+  /* If your SVG has invisible padding, this tightens it optically */
+  margin-right: -2px;        /* adjust: -1px to -6px if needed */
+  transform: translateY(1px);
 }
 
 .brand-name {
-  font-weight: 500;          /* your preference */
-  font-size: 42px;
+  font-weight: 800;          /* bold like the reference */
+  font-size: 42px;           /* keep your current scale */
   line-height: 1;
   color: var(--text);
-  letter-spacing: 0.005em;   /* avoid Inter looking “stuck together” */
-  margin: 0;
-}
 
-.brand-name .ft-gap {
-  display: inline-block;
-  margin-left: 0.07em;       /* tweak range: 0.05em–0.10em */
+  /* Tight, but not “letters glued together” */
+  letter-spacing: -0.012em;  /* tweak: -0.008em to -0.018em */
+  margin: 0;
+
+  /* Helps Inter look crisp */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
   /* --- GLASS CARD --- */
@@ -269,11 +263,9 @@
 
   /* --- RESPONSIVE --- */
 @media (max-width: 600px) {
-  header.site-header { gap: 10px; }
-  .brand-name { font-size: 32px; }
-  .logo-container { margin-right: -5px; transform: translateY(1px); }
-  .logo-container img { width: 38px; height: 38px; }
-  .brand-name .ft-gap { margin-left: 0.07em; }
+  header.site-header { gap: 9px; }
+  .brand-logo { width: 40px; height: 40px; margin-right: -2px; transform: translateY(1px); }
+  .brand-name { font-size: 32px; letter-spacing: -0.01em; }
 
   h1 { font-size: 32px; }
   p.lead { font-size: 17px; }
@@ -302,12 +294,10 @@
 
   <main class="page-wrapper">
     
-    <header class="site-header">
-      <div class="logo-container">
-        <img src="SSLogo.svg" alt="Logo" onerror="this.style.display='none'"> 
-      </div>
-  <div class="brand-name">SleekShif<span class="ft-gap">t</span></div>
-    </header>
+<header class="site-header">
+  <img class="brand-logo" src="SSLogo.svg" alt="Logo" onerror="this.style.display='none'">
+  <div class="brand-name">SleekShift</div>
+</header>
 
     <section class="glass-card">
       <h1>We’re building<br>something useful.</h1>
