@@ -4,16 +4,17 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>SleekShift — Coming soon</title>
+<meta name="description" content="SleekShift — We’re building something useful. Contact: contact@sleekshift.co.uk" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f8faff;
+    --bg: #f8faff; /* Very subtle cool white */
     --text: #0f172a;
     --muted: #64748b;
     --brand-purple: #7c3aed;
-    --brand-light: #a78bfa;
+    --brand-light-purple: #a78bfa;
     --card-bg: rgba(255, 255, 255, 0.65);
     --card-border: rgba(255, 255, 255, 0.9);
   }
@@ -31,12 +32,13 @@
 
   a { text-decoration: none; transition: 0.2s ease; }
 
-  /* --- BACKGROUND & FLAKES --- */
+  /* --- ANIMATED BACKGROUND LAYER --- */
   .bg-layer {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: radial-gradient(circle at 50% -20%, rgba(240,235,255,0.9) 0%, rgba(255,255,255,0) 70%);
+    background: radial-gradient(circle at 50% -20%, rgba(240,235,255,0.8) 0%, rgba(255,255,255,0) 60%);
   }
 
+  /* --- PURPLE BLURRY SNOWFLAKES (CSS Particles) --- */
   .snow-container {
     position: fixed; inset: 0; z-index: 1; pointer-events: none;
   }
@@ -46,44 +48,33 @@
     top: -10%;
     background: var(--brand-purple);
     border-radius: 50%;
-    filter: blur(6px);
+    filter: blur(8px); /* The "blurry" effect */
     animation: fall linear infinite;
     opacity: 0;
   }
   
   @keyframes fall {
     0% { transform: translateY(-10vh) translateX(-10px); opacity: 0; }
-    20% { opacity: 0.6; }
+    20% { opacity: 0.5; } /* Lower opacity for subtlety */
     50% { transform: translateY(50vh) translateX(10px); }
     100% { transform: translateY(110vh) translateX(-10px); opacity: 0; }
   }
 
-  /* --- 24 FLAKES CONFIGURATION (Randomized for natural feel) --- */
-  .flake:nth-child(1) { left: 5%; width: 15px; height: 15px; animation-duration: 12s; animation-delay: 0s; }
-  .flake:nth-child(2) { left: 12%; width: 8px; height: 8px; animation-duration: 15s; animation-delay: 2s; background: var(--brand-light); }
-  .flake:nth-child(3) { left: 20%; width: 20px; height: 20px; animation-duration: 18s; animation-delay: 1s; opacity: 0.3; filter: blur(8px); }
-  .flake:nth-child(4) { left: 28%; width: 10px; height: 10px; animation-duration: 10s; animation-delay: 5s; }
-  .flake:nth-child(5) { left: 35%; width: 25px; height: 25px; animation-duration: 14s; animation-delay: 0.5s; filter: blur(12px); }
-  .flake:nth-child(6) { left: 42%; width: 12px; height: 12px; animation-duration: 16s; animation-delay: 3s; background: #ddd6fe; }
-  .flake:nth-child(7) { left: 50%; width: 18px; height: 18px; animation-duration: 20s; animation-delay: 1.5s; }
-  .flake:nth-child(8) { left: 58%; width: 9px; height: 9px; animation-duration: 13s; animation-delay: 4s; background: var(--brand-light); }
-  .flake:nth-child(9) { left: 65%; width: 22px; height: 22px; animation-duration: 17s; animation-delay: 2.5s; filter: blur(10px); }
-  .flake:nth-child(10) { left: 72%; width: 14px; height: 14px; animation-duration: 19s; animation-delay: 0.2s; }
-  .flake:nth-child(11) { left: 80%; width: 16px; height: 16px; animation-duration: 11s; animation-delay: 3.5s; opacity: 0.4; }
-  .flake:nth-child(12) { left: 90%; width: 24px; height: 24px; animation-duration: 22s; animation-delay: 1s; background: #ddd6fe; }
-  /* New Batch (Doubling) */
-  .flake:nth-child(13) { left: 2%; width: 28px; height: 28px; animation-duration: 24s; animation-delay: 6s; filter: blur(14px); opacity: 0.2; }
-  .flake:nth-child(14) { left: 15%; width: 6px; height: 6px; animation-duration: 14s; animation-delay: 8s; }
-  .flake:nth-child(15) { left: 25%; width: 14px; height: 14px; animation-duration: 16s; animation-delay: 5.5s; background: var(--brand-light); }
-  .flake:nth-child(16) { left: 38%; width: 30px; height: 30px; animation-duration: 25s; animation-delay: 2s; filter: blur(16px); }
-  .flake:nth-child(17) { left: 45%; width: 11px; height: 11px; animation-duration: 12s; animation-delay: 7s; }
-  .flake:nth-child(18) { left: 55%; width: 19px; height: 19px; animation-duration: 18s; animation-delay: 4.5s; background: #ddd6fe; }
-  .flake:nth-child(19) { left: 62%; width: 7px; height: 7px; animation-duration: 15s; animation-delay: 9s; }
-  .flake:nth-child(20) { left: 70%; width: 26px; height: 26px; animation-duration: 21s; animation-delay: 3s; filter: blur(9px); }
-  .flake:nth-child(21) { left: 78%; width: 13px; height: 13px; animation-duration: 17s; animation-delay: 6.5s; }
-  .flake:nth-child(22) { left: 85%; width: 21px; height: 21px; animation-duration: 19s; animation-delay: 5s; background: var(--brand-light); }
-  .flake:nth-child(23) { left: 92%; width: 10px; height: 10px; animation-duration: 13s; animation-delay: 8.5s; }
-  .flake:nth-child(24) { left: 96%; width: 32px; height: 32px; animation-duration: 26s; animation-delay: 0.5s; filter: blur(18px); opacity: 0.15; }
+  /* Generating variations - Increased count to 12 */
+  .flake:nth-child(1) { left: 10%; width: 20px; height: 20px; animation-duration: 14s; animation-delay: 0s; }
+  .flake:nth-child(2) { left: 25%; width: 15px; height: 15px; animation-duration: 18s; animation-delay: 2s; background: var(--brand-light-purple); filter: blur(5px); }
+  .flake:nth-child(3) { left: 40%; width: 25px; height: 25px; animation-duration: 20s; animation-delay: 1s; opacity: 0.3; }
+  .flake:nth-child(4) { left: 55%; width: 10px; height: 10px; animation-duration: 12s; animation-delay: 5s; }
+  .flake:nth-child(5) { left: 75%; width: 30px; height: 30px; animation-duration: 16s; animation-delay: 0.5s; filter: blur(12px); }
+  .flake:nth-child(6) { left: 85%; width: 18px; height: 18px; animation-duration: 13s; animation-delay: 3s; background: #ddd6fe; }
+  
+  /* New flakes for denser feel */
+  .flake:nth-child(7) { left: 5%; width: 12px; height: 12px; animation-duration: 11s; animation-delay: 1.5s; opacity: 0.4; }
+  .flake:nth-child(8) { left: 33%; width: 22px; height: 22px; animation-duration: 19s; animation-delay: 4s; background: var(--brand-light-purple); }
+  .flake:nth-child(9) { left: 60%; width: 28px; height: 28px; animation-duration: 15s; animation-delay: 2.5s; filter: blur(10px); }
+  .flake:nth-child(10) { left: 92%; width: 14px; height: 14px; animation-duration: 17s; animation-delay: 0.2s; }
+  .flake:nth-child(11) { left: 20%; width: 16px; height: 16px; animation-duration: 13s; animation-delay: 3.5s; opacity: 0.35; }
+  .flake:nth-child(12) { left: 48%; width: 24px; height: 24px; animation-duration: 21s; animation-delay: 1s; background: #ddd6fe; filter: blur(6px); }
 
 
   /* --- LAYOUT --- */
@@ -92,25 +83,24 @@
     z-index: 5;
     min-height: 100vh;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column; /* Stack logo above card */
     align-items: center;
-    justify-content: center; /* Vertical Center */
+    justify-content: center;
     padding: 20px;
-    gap: 32px; /* Gap between Logo and Card */
   }
 
-  /* --- HEADER --- */
+  /* --- HEADER (Centered & Larger) --- */
   header.site-header {
+    margin-bottom: 40px; /* Increased space */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    /* Removed large margin-bottom here, using 'gap' in flex container instead for better rhythm */
+    gap: 16px; /* Increased gap */
   }
 
   .logo-container {
-    width: 60px; 
-    height: 60px;
+    width: 64px; /* Increased size */
+    height: 64px; /* Increased size */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,42 +114,45 @@
   }
   
   .brand-name {
-    font-weight: 800;
-    font-size: 36px;
+    font-weight: 800; /* Made bolder */
+    font-size: 32px; /* Increased font size */
     color: var(--text);
-    letter-spacing: -0.04em;
-    line-height: 1;
+    letter-spacing: -0.03em;
   }
 
   /* --- GLASS CARD --- */
   .glass-card {
     width: 100%;
-    max-width: 680px; /* Constrains width to prevent long ugly lines */
+    max-width: 580px; /* Slightly wider card */
     text-align: center;
-    /* Transparent card for cleaner look */
-    background: transparent; 
-    /* Or use this for glass effect: */
-    /* background: var(--card-bg); backdrop-filter: blur(24px); border: 1px solid var(--card-border); box-shadow: 0 20px 40px -12px rgba(124, 58, 237, 0.08); */
-    
-    padding: 0 20px; /* Minimal padding since we removed the border/bg for the clean screenshot look */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: var(--card-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 64px 48px;
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.01), 
+      0 20px 40px -12px rgba(124, 58, 237, 0.08);
   }
 
   h1 {
-    font-size: 26px; /* Optimized for the longer sentence */
-    margin: 0 0 32px;
-    line-height: 1.4;
-    font-weight: 600; /* Slightly lighter weight for longer text looks more premium */
-    color: var(--muted); /* Using a softer color for the "description-as-headline" look */
-    letter-spacing: -0.02em;
-    text-wrap: balance; /* MAGIC PROPERTY: Balances lines perfectly */
-    max-width: 500px; /* Forces a nice shape */
+    font-size: 42px;
+    margin: 0 0 16px;
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #0f172a;
   }
-  
-  /* Highlight specifically "SleekShift" in the text if needed, 
-     but for now keeping it simple based on image */
+
+  p.lead {
+    margin: 0 auto 32px;
+    color: var(--muted);
+    font-size: 18px; /* Slightly larger font */
+    font-weight: 400;
+    line-height: 1.5;
+    max-width: 460px; /* Ensure new joke text fits well */
+  }
 
   .cta-group {
     display: flex;
@@ -172,36 +165,36 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 56px;
-    padding: 0 42px;
+    height: 52px; /* Slightly taller button */
+    padding: 0 36px;
     border-radius: 99px;
     font-weight: 600;
     font-size: 16px;
     color: white;
     background: #0f172a;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+    transition: all 0.25s ease;
   }
 
   .btn:hover {
     transform: translateY(-2px);
     background: var(--brand-purple);
-    box-shadow: 0 12px 32px rgba(124, 58, 237, 0.35);
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.3);
   }
 
   .email-link {
     font-size: 14px;
     color: var(--muted);
-    opacity: 0.6;
-    margin-top: 8px;
+    opacity: 0.7;
   }
   .email-link:hover { opacity: 1; color: var(--brand-purple); }
 
   /* --- RESPONSIVE --- */
   @media (max-width: 600px) {
-    .brand-name { font-size: 28px; }
+    h1 { font-size: 32px; }
+    .brand-name { font-size: 24px; }
     .logo-container { width: 48px; height: 48px; }
-    h1 { font-size: 20px; }
+    .glass-card { padding: 40px 24px; }
   }
 </style>
 </head>
@@ -210,12 +203,18 @@
   <div class="bg-layer"></div>
 
   <div class="snow-container" aria-hidden="true">
-    <div class="flake"></div><div class="flake"></div><div class="flake"></div><div class="flake"></div>
-    <div class="flake"></div><div class="flake"></div><div class="flake"></div><div class="flake"></div>
-    <div class="flake"></div><div class="flake"></div><div class="flake"></div><div class="flake"></div>
-    <div class="flake"></div><div class="flake"></div><div class="flake"></div><div class="flake"></div>
-    <div class="flake"></div><div class="flake"></div><div class="flake"></div><div class="flake"></div>
-    <div class="flake"></div><div class="flake"></div><div class="flake"></div><div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
+    <div class="flake"></div>
   </div>
 
   <main class="page-wrapper">
@@ -228,7 +227,8 @@
     </header>
 
     <section class="glass-card">
-      <h1>SleekShift is the growth upgrade your store deserves, not another “strategy doc.”</h1>
+      <h1>We’re building<br>something useful.</h1>
+      <p class="lead">We're building the only cart that won't<br>judge your 3 AM impulse buys.</p>
 
       <div class="cta-group">
         <a class="btn" href="mailto:contact@sleekshift.co.uk">Get in touch</a>
